@@ -4,7 +4,7 @@ uint16_t num;
 int main(void)
 {
     RCC->CR|=1<<16;
-    while(((RCC->CR>>17)&1)==0);
+    while(!((RCC->CR>>17)&1));
     FLASH->ACR |= 2; 
     RCC->CFGR &= ~(1<<7);   
     RCC->CFGR &= ~(1<<13);   
@@ -12,7 +12,7 @@ int main(void)
     RCC->CFGR|=1<<16;  
     RCC->CFGR|=7<<18;   
     RCC->CR|=1<<24;
-    while(((RCC->CR>>25)&1)==0);
+    while(!((RCC->CR>>25)&1));
     RCC->CFGR|=2;
     while(((RCC->CFGR>>2)&3)!=2);
     RCC->APB2ENR|=0x0c; 
@@ -64,32 +64,32 @@ int main(void)
       }
   while (1)
   {
-    if((((GPIOB->IDR)>>3)&1)==1)
+    if(((GPIOB->IDR)>>3)&1)
     {
         Delay_ms(20);
-        if((((GPIOB->IDR)>>3)&1)==1)
+        if(((GPIOB->IDR)>>3)&1)
         {
             GPIOA->ODR&=~(1<<10);
             num++;
             if(num==10)
                 num=0;
         Flash_write(0x0801FC00,num);
-            while((((GPIOB->IDR)>>3)&1)==1);
+            while(((GPIOB->IDR)>>3)&1);
             GPIOA->ODR|=1<<10;
         }
         Delay_ms(30);
     }
-    if((((GPIOB->IDR)>>4)&1)==1)
+    if(((GPIOB->IDR)>>4)&1)
     {
         Delay_ms(30);
-        if((((GPIOB->IDR)>>4)&1)==1)
+        if(((GPIOB->IDR)>>4)&1)
         {
             GPIOA->ODR&=~(1<<9);
             num--;
             if(num==0xffff)
                 num=9;
             Flash_write(0x0801FC00,num);
-            while((((GPIOB->IDR)>>4)&1)==1);
+            while(((GPIOB->IDR)>>4)&1);
             GPIOA->ODR|=1<<9;
         }
         Delay_ms(20);
