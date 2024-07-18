@@ -64,20 +64,4 @@ double DTA_3(double angle);
 //清除标志位
 #define ClearFlag()			do{		flag=0;  }while(0)
 
-
-
-//设置上面那个舵机角度
-//#define set_Angle1_Up(Angle)  do{\
-//                               __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_1,(int)((Angle)/45*500+1500));\
-//																}while(0)
-
-//																
-////设置底下那个舵机角度
-//#define set_Angle1_Down(Angle)  do{\
-//                               __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_2,(int)((Angle)/45*500+1500));\
-//																}while(0)
-
-					
-																
-																
 #endif

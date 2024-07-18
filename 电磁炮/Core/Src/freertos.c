@@ -222,7 +222,7 @@ void StartDefaultTask(void const * argument)
 	  	osDelay(1);
   /* USER CODE END StartDefaultTask */
 }
-
+}
 /* USER CODE BEGIN Header_StartTask02 */
 /**
 * @brief Function implementing the myTask02 thread.

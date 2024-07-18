@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "gpio.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "MPU6050.h"
@@ -62,8 +63,8 @@ void Delay_ms(uint32_t xms)
 }
 int16_t Roll_angle;  
 int16_t Pitch_angle;
-float c;
 /* USER CODE END PV */
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
@@ -72,64 +73,33 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+SixAxisData data;
+Angle angle;
+extern uint8_t Test;
 /* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
   * @retval int
   */
-uint8_t b;
-SixAxisData data;
-Angle angle;
+
 int main(void)
 {
-
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  /* USER CODE BEGIN 2 */
-  MPU6050Init();
 
-  Kalman_pm_st  Kalman_pm1;   //定义结构体
-  Kalman_Init(&Kalman_pm1);    //给结构体赋初值和修改参数
-     
-   Kalman_pm_st  Kalman_pm2;   //定义结构体
-   Kalman_Init(&Kalman_pm2);    //给结构体赋初值和修改参数
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+    GPIOx_I2c_ToFast_Init();
+    
+    Hardare_WriteReg(MPU6050_ADDRESS,MPU6050_PWR_MGMT_1,1);
+//    Hardare_WriteReg(MPU6050_ADDRESS,MPU6050_SMPLRT_DIV,9);
+    
+    Test=Hardare_ReadReg(MPU6050_ADDRESS ,MPU6050_PWR_MGMT_1);
+     GPIOB->CRH=0x44444477; //PB8,9端口配置为复用开漏输出 50MHZ
+    GPIOB->ODR|=(1<<8)|(1<<9);//上拉
   while (1)
   {
-     GetData(&data);
-     GetAngle(&angle,&data);
-      
-     Pitch_angle=Kalman_Filter(&Kalman_pm1,angle.pitch,data.GyroY);   //调用卡尔曼滤波
-     
-     Roll_angle=Kalman_Filter(&Kalman_pm2,angle.roll,data.GyroX);   //调用卡尔曼滤波
-    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
@@ -148,11 +118,11 @@ void SystemClock_Config(void)
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV2;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL15;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();

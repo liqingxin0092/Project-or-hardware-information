@@ -76,18 +76,6 @@ void AutoCarryOut()             //找到目标后的操作
 		OffsetDistance=-55;
 	else if(280<FirstDistance-50)
 		OffsetDistance=-58;
-		
-//	if(4<fabs(FirstAngle)&&fabs(FirstAngle)<=15)  // 根据角度补偿
-//	{
-//		 OffsetAngle=4.1;
-//		 OffsetDistance=-55;
-//	}
-//	
-//	else if(15<fabs(FirstAngle))
-//	{
-//		 OffsetAngle=4.4;
-//		OffsetDistance=-58;
-//	}
 	if(FirstAngle>0&&4<fabs(FirstAngle)&&fabs(FirstAngle)<=15)
     {
        OffsetAngle=2.2;
@@ -143,16 +131,10 @@ void AutoCarryOut()             //找到目标后的操作
 	
 	
 	
-				HAL_Delay(1000);  
-    
-    			set_Angle1_Up(Dis_To_Ang1(InpuD_To_ModiD(a+OffsetDistance)));//   最初  修正
-    
-//				set_Angle1_Up(Dis_To_Ang2(AutoDisatance+OffsetDistance));//   点线  不修正
-    
-//				set_Angle2_Up(Dis_To_Ang2(InpuD_To_ModiD(AutoDisatance+OffsetDistance)));//   点线  修正
-    
-//				set_Angle1_Up(DTA_3(AutoDisatance+OffsetDistance));//     三次方拟合       不修正
-    
+		HAL_Delay(1000);  
+
+    	set_Angle1_Up(Dis_To_Ang1(InpuD_To_ModiD(a+OffsetDistance)));//   最初  修正
+
 				HAL_Delay(1000);
 				lOOOms_charge();      // 自动充能1秒
 				
@@ -195,6 +177,7 @@ double DTA_3(double angle)        //三次
 {
 	return 1.487e-05 * angle * angle * angle - 0.01187 * angle * angle + 2.895 * angle - 228.1;
 }
+
 double Dis_To_Ang1(double dis)         //  最初
 {
 	int8_t i = 0;

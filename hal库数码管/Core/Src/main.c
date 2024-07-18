@@ -87,7 +87,7 @@ void key2()
         {
             
             GPIOA->ODR&=~(1<<9);
-            num--3;
+            num--;
              s=num%10;
             
            
