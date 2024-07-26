@@ -11,9 +11,9 @@ void Kalman_Init(Kalman_pm_st* Kalman_pm)
 
     Kalman_pm->dt = 0.01f;      //时间
     
-    Kalman_pm->Q_angle = 0.002f;   //原来是 0.001  //本身值的波动大小
+    Kalman_pm->Q_angle = 0.002f;    //原来是 0.001  //本身值的波动大小
     Kalman_pm->Q_gyro = 0.0035f;    //原来是 0.003  //值导数的波动大小
-    Kalman_pm->R_angle = 0.6f;     //原来是 0.5     //观测的波动大小
+    Kalman_pm->R_angle = 0.6f;      //原来是 0.5     //观测的波动大小
     
     Kalman_pm->q_bias = 0.0f;
     Kalman_pm->angle_f = 0.0f;

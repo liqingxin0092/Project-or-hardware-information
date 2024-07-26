@@ -64,7 +64,6 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
 	if(huart==&huart1)
 		{
-		
 		if (FifoSize > Uart.UartFifo.Cnt)
 		{
 				Uart.UartFifo.RxBuf[Uart.UartFifo.In] = rx_byte;
@@ -74,9 +73,6 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 				}
 				++Uart.UartFifo.Cnt;
 		}
-			
-//			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13 );
-		
 			  HAL_UARTEx_ReceiveToIdle_DMA(&huart1, &rx_byte, 1);
 			  __HAL_DMA_DISABLE_IT(&hdma_usart1_rx,DMA_IT_HT);//πÿ±’÷–∂œ
 			  

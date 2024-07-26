@@ -8,6 +8,7 @@ int main(void)
     NVIC_Config();
     UART_Init();
     printf("hello world,%d %g ",50,3.6);
+    
     while (1)
     {
        

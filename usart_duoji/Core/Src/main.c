@@ -118,15 +118,19 @@ int main(void)
   /* USER CODE BEGIN 2 */
   
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart2, receivedata, 50);
-	__HAL_DMA_DISABLE_IT(&hdma_usart2_rx,DMA_IT_HT);//πÿ±’÷–∂œ
+	__HAL_DMA_DISABLE_IT(&hdma_usart2_rx,DMA_IT_HT);
       
   /* USER CODE END 2 */
-HAL_Delay(1000);
+//  USART_Printf( &huart2,"#000PCLE!");
+//  USART_Printf( &huart2,"#000PMOD3!");
+  HAL_Delay(1000);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-   USART_Printf( &huart2,"#000P0500T0000!");
+   USART_Printf( &huart2,"#000P2500T5000!");
+   HAL_Delay(1000);
+   USART_Printf( &huart2,"#000PRAD!");
    HAL_Delay(1000);
    USART_Printf( &huart2,"#000PRAD!");
    HAL_Delay(1000);

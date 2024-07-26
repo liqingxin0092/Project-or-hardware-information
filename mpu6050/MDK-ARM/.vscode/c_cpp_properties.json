@@ -3,16 +3,16 @@
         {
             "name": "1",
             "includePath": [
-                "d:\\OneDrive\\Desktop\\1\\Core\\Inc",
-                "d:\\OneDrive\\Desktop\\1\\Drivers\\STM32F1xx_HAL_Driver\\Inc",
-                "d:\\OneDrive\\Desktop\\1\\Drivers\\STM32F1xx_HAL_Driver\\Inc\\Legacy",
-                "d:\\OneDrive\\Desktop\\1\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
-                "d:\\OneDrive\\Desktop\\1\\Drivers\\CMSIS\\Include",
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\Core\\Inc",
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\Drivers\\STM32F1xx_HAL_Driver\\Inc",
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\Drivers\\STM32F1xx_HAL_Driver\\Inc\\Legacy",
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\Drivers\\CMSIS\\Include",
                 "D:\\keil5\\ARM\\ARMCC\\include",
                 "D:\\keil5\\ARM\\ARMCC\\include\\rw",
-                "d:\\OneDrive\\Desktop\\1\\MDK-ARM",
-                "d:\\OneDrive\\Desktop\\1\\Core\\Src",
-                "d:\\OneDrive\\Desktop\\1\\Drivers\\STM32F1xx_HAL_Driver\\Src"
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\MDK-ARM",
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\Core\\Src",
+                "d:\\OneDrive\\Desktop\\库\\Project-or-hardware-information\\mpu6050\\Drivers\\STM32F1xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

@@ -234,9 +234,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 /* USER CODE BEGIN 1 */
 int UART_Write(uint8_t n,  uint8_t *buf, int Len)
 {
-
 	HAL_UART_Transmit(&huart1, buf, Len, 1000);
-
 	return Len;
 }
 /* USER CODE END 1 */

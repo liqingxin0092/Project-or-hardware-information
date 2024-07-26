@@ -1,215 +1,219 @@
 #include "i2c.h"
-void deal(uint16_t Pin,GPIO_PinState PinState)
+void deal(uint16_t Pin, GPIO_PinState PinState)
 {
-    if(PinState==1)
+    if (PinState == 1)
     {
-        GPIO_I2C->ODR |=1<<Pin;
+        GPIO_I2C->ODR |= 1 << Pin;
     }
-    else if (PinState==0)
+    else if (PinState == 0)
     {
-        GPIO_I2C->ODR&=~(1<<Pin);
+        GPIO_I2C->ODR &= ~(1 << Pin);
     }
 }
 void start()
-{	
-	SCL(1);//ÔÚ¸ßµÄÊ±ºò±äSDA£¬ÏÔÊ¾³öÆðÊ¼»òÖÕÖ¹
+{
+    SCL(1); // ï¿½Ú¸ßµï¿½Ê±ï¿½ï¿½ï¿½SDAï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ö¹
     SDA(1);
-	SDA(0);
-	SCL(0);
+    SDA(0);
+    SCL(0);
 }
 void restart()
 {
     SDA(1);
     SCL(1);
     SDA(0);
-	SCL(0);
+    SCL(0);
 }
 void stop()
-{	
-    SDA(0); //ÒòÎªSDAµÄ¿ªÊ¼µçÆ½²»È·¶¨£¬ÏÈ²Ù×÷SDA
-	SCL(0);
-	SCL(1);
-	SDA(1);
-}
-void send(uint8_t bite) //·¢Ò»¸ö×Ö½Ú
 {
-	for (uint8_t i=0;i<8;i++)
-	{
-		SCL(0);
-		SDA((bite&(0x80>>i))>>(7-i));
-		SCL(1);
-	}
-	SCL(0);
+    SDA(0); // ï¿½ï¿½ÎªSDAï¿½Ä¿ï¿½Ê¼ï¿½ï¿½Æ½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½È²ï¿½ï¿½ï¿½SDA
+    SCL(0);
+    SCL(1);
+    SDA(1);
 }
-uint8_t receive()   //ÊÕÒ»¸ö×Ö½Ú
+void send(uint8_t bite) // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½
 {
-	uint8_t receive_data=0;
-    SDA(1);//Ö÷»úÊÍ·ÅSDA£¬¿ªÂ©¸ßµçÆ½£¬Ïàµ±ÓÚÊäÈë
-	for(uint8_t i=0;i<8;i++)
-	{
-        SCL(0); //´Ó»ú·Å
-        SCL(1); //Ö÷»ú¶Á
-        receive_data|=   (((GPIO_I2C->IDR)>>GPIO_PIN_SDA)&1) <<(7-i);
-	}
-	SCL(0);
-	return receive_data;
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        SCL(0);
+        SDA((bite & (0x80 >> i)) >> (7 - i));
+        SCL(1);
+    }
+    SCL(0);
+}
+uint8_t receive() // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½
+{
+    uint8_t receive_data = 0;
+    SDA(1); // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½SDAï¿½ï¿½ï¿½ï¿½Â©ï¿½ßµï¿½Æ½ï¿½ï¿½ï¿½àµ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        SCL(0); // ï¿½Ó»ï¿½ï¿½ï¿½
+        SCL(1); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        receive_data |= (((GPIO_I2C->IDR) >> GPIO_PIN_SDA) & 1) << (7 - i);
+    }
+    SCL(0);
+    return receive_data;
 }
 void send_ack(uint8_t i)
 {
-	SCL(0);//¿ªÊ¼¸Ä±ä
-	SDA(i);//Ó¦´ð
-	SCL(1);//´Ó»ú¶ÁÈ¡
-	SCL(0);//ÏÂÒ»´Î
+    SCL(0); // ï¿½ï¿½Ê¼ï¿½Ä±ï¿½
+    SDA(i); // Ó¦ï¿½ï¿½
+    SCL(1); // ï¿½Ó»ï¿½ï¿½ï¿½È¡
+    SCL(0); // ï¿½ï¿½Ò»ï¿½ï¿½
 }
 uint8_t receive_ack(void)
 {
-	SDA(1);//Ö÷»úÊÍ·Å
-	uint8_t receive_ack;  
-	SCL(0);  //´Ó»ú·ÅÊý¾Ý
-	SCL(1);   //Ö÷»ú¶ÁÈ¡
-	receive_ack=  ((GPIO_I2C->IDR)>>GPIO_PIN_SDA)&1;
-	SCL(0);   //ÏÂÒ»´Î
-	return receive_ack;
+    SDA(1); // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½
+    uint8_t receive_ack;
+    SCL(0); // ï¿½Ó»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    SCL(1); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡
+    receive_ack = ((GPIO_I2C->IDR) >> GPIO_PIN_SDA) & 1;
+    SCL(0); // ï¿½ï¿½Ò»ï¿½ï¿½
+    return receive_ack;
 }
-//Ö¸¶¨µØÖ·Ð´Ò»¸ö×Ö½Ú
-void WriteReg(uint8_t address,uint8_t reg_address,uint8_t data)
+// Ö¸ï¿½ï¿½ï¿½ï¿½Ö·Ð´Ò»ï¿½ï¿½ï¿½Ö½ï¿½
+void WriteReg(uint8_t address, uint8_t reg_address, uint8_t data)
 {
     start();
-    
-    send(address);   //·¢ËÍÉè±¸µØÖ·
-    receive_ack();//ÅÐ¶Ï´Ó»úÓÐÃ»ÓÐ½ÓÊÕÓ¦´ð£¬ÎªÁËÆ´½ÓÊ±Ðò
-    
-    send(reg_address); //·¢ËÍÉè±¸¼Ä´æÆ÷µØÖ·
+
+    send(address); // ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·
+    receive_ack(); // ï¿½Ð¶Ï´Ó»ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Îªï¿½ï¿½Æ´ï¿½ï¿½Ê±ï¿½ï¿½
+
+    send(reg_address); // ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
     receive_ack();
-    
-    send(data);//Ö¸¶¨µØÖ·ÏÂµÄÊý¾Ý
+
+    send(data); // Ö¸ï¿½ï¿½ï¿½ï¿½Ö·ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½
     receive_ack();
-    
+
     stop();
 }
-uint16_t ReadReg(uint8_t address,uint8_t reg_address)
+uint16_t ReadReg(uint8_t address, uint8_t reg_address)
 {
     uint16_t data;
     start();
-    
-    send(address);   //Éè±¸µØÖ·
-    receive_ack();//ÅÐ¶Ï´Ó»úÓÐÃ»ÓÐ½ÓÊÕÓ¦´ð
-    
-    send(reg_address); //·¢ËÍÉè±¸¼Ä´æÆ÷µØÖ·
+
+    send(address); // ï¿½è±¸ï¿½ï¿½Ö·
+    receive_ack(); // ï¿½Ð¶Ï´Ó»ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+
+    send(reg_address); // ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
     receive_ack();
-    
+
     restart();
-    send(address|1);  //ÒâË¼ÊÇÒª¶ÁÁË
+    send(address | 1); // ï¿½ï¿½Ë¼ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
     receive_ack();
-    
-    data=receive();
-    send_ack(1);//·ÇÓ¦´ð
-    
+
+    data = receive();
+    send_ack(1); // ï¿½ï¿½Ó¦ï¿½ï¿½
+
     stop();
     return data;
 }
 
-void ReadRegs(uint8_t address,uint8_t reg_address,uint8_t *buffer,uint8_t lenth)
+void ReadRegs(uint8_t address, uint8_t reg_address, uint8_t *buffer, uint8_t lenth)
 {
     uint8_t i;
     start();
-    
-    send(address);   //Éè±¸µØÖ·
-    receive_ack();//ÅÐ¶Ï´Ó»úÓÐÃ»ÓÐ½ÓÊÕÓ¦´ð
-    
-    send(reg_address); //·¢ËÍÉè±¸¼Ä´æÆ÷µØÖ·
+
+    send(address); // ï¿½è±¸ï¿½ï¿½Ö·
+    receive_ack(); // ï¿½Ð¶Ï´Ó»ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+
+    send(reg_address); // ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
     receive_ack();
-    
+
     restart();
-    send(address|1);  //ÒâË¼ÊÇÒª¶ÁÁË
+    send(address | 1); // ï¿½ï¿½Ë¼ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
     receive_ack();
-    for(i=0;i<lenth-1;i++)
+    for (i = 0; i < lenth - 1; i++)
     {
-        *(buffer+i)=receive();
-         send_ack(0);//Ó¦´ð
+        *(buffer + i) = receive();
+        send_ack(0); // Ó¦ï¿½ï¿½
     }
-    *(buffer+i)=receive();
-    send_ack(1);//·ÇÓ¦´ð
-    
+    *(buffer + i) = receive();
+    send_ack(1); // ï¿½ï¿½Ó¦ï¿½ï¿½
+
     stop();
 }
 
- //Ó²¼þ·½Ê½
+// Ó²ï¿½ï¿½ï¿½ï¿½Ê½
 void GPIOx_I2c_ToFast_Init()
 {
-    //I2C1ÖØÓ³Éä
-    RCC->APB2ENR|= RCC_APB2ENR_AFIOEN;  //Ê¹ÄÜ¸´ÓÃÊ±ÖÓ
-    AFIO->MAPR|=1<<1;   
-    
-   //³õÊ¼»¯I2cÍâÉè
-    RCC->APB1ENR|=1<<21;//¿ªÆôi2c1ÍâÉèÊ±ÖÓ 
-    I2C1->CR2|=11110;//ÉèÖÃÊ±ÖÓÆµÂÊ30MHZ
-    I2C1->CR2&=~((1<<11)|(1<<8)|(1<<9));
-    I2C1->CCR|=1<<15; //¿ìËÙÄ£Ê½
-    I2C1->CCR&=~(1<<14);//Õ¼¿Õ±È1£º2
-    I2C1->CCR|=25;//¸øÊ±ÖÓÆµÂÊ µ½400khz
-    I2C1->TRISE=7; //ÉèÖÃÉÏÉýÊ±¼ä 200ns 
+    // I2C1ï¿½ï¿½Ó³ï¿½ï¿½
+    RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; // Ê¹ï¿½Ü¸ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    AFIO->MAPR |= 1 << 1;
 
-    //³õÊ¼»¯GPIO¿Ú
-    RCC->APB2ENR|=RCC_APB2ENR_IOPBEN;  //¿ªÆôGPIOBÊ±ÖÓ
-    GPIOB->CRH=0x444444ff; //PB8,9¶Ë¿ÚÅäÖÃÎª¸´ÓÃ¿ªÂ©Êä³ö 50MHZ
-    GPIOB->ODR|=(1<<8)|(1<<9);//ÉÏÀ­     
-    //i2cÄ£¿éÊ¹ÄÜ
-    I2C1->CR1|=1;
+    // ï¿½ï¿½Ê¼ï¿½ï¿½I2cï¿½ï¿½ï¿½ï¿½
+    RCC->APB1ENR |= 1 << 21; // ï¿½ï¿½ï¿½ï¿½i2c1ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    I2C1->CR2 |= 11110;      // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Æµï¿½ï¿½30MHZ
+    I2C1->CR2 &= ~((1 << 11) | (1 << 8) | (1 << 9));
+    I2C1->CCR |= 1 << 15;    // ï¿½ï¿½ï¿½ï¿½Ä£Ê½
+    I2C1->CCR &= ~(1 << 14); // Õ¼ï¿½Õ±ï¿½1ï¿½ï¿½2
+    I2C1->CCR |= 25;         // ï¿½ï¿½Ê±ï¿½ï¿½Æµï¿½ï¿½ ï¿½ï¿½400khz
+    I2C1->TRISE = 7;         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ 200ns
+
+    // ï¿½ï¿½Ê¼ï¿½ï¿½GPIOï¿½ï¿½
+    RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; // ï¿½ï¿½ï¿½ï¿½GPIOBÊ±ï¿½ï¿½
+    GPIOB->CRH = 0x444444ff;            // PB8,9ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ã¿ï¿½Â©ï¿½ï¿½ï¿½ 50MHZ
+    GPIOB->ODR |= (1 << 8) | (1 << 9);  // ï¿½ï¿½ï¿½ï¿½
+    // i2cÄ£ï¿½ï¿½Ê¹ï¿½ï¿½
+    I2C1->CR1 |= 1;
 }
-void Hardare_WriteReg(uint8_t address,uint8_t reg_address,uint8_t data)
+void Hardare_WriteReg(uint8_t address, uint8_t reg_address, uint8_t data)
 {
-    
-    uint8_t i=0;
 
-    I2C1->CR1|=1<<8; //²úÉúÆðÊ¼Ìõ¼þ
-    while(((I2C1->SR1)&1)==0);//µÈ´ýÆðÊ¼Ìõ¼þ·¢ËÍ ¶Ô
-    
-    I2C1->DR=address; //·¢ËÍµØÖ·
-    while((((I2C1->SR1)>>1)&1)==0);//µÈ´ýµØÖ··¢ËÍ½áÊø   ¶Ô
-    
-    I2C1->DR=reg_address; //·¢ËÍ¼Ä´æÆ÷µØÖ· 
-    I2C1->DR=data; //·¢ËÍÊý¾Ý
-    while((((I2C1->SR1)>>2)&1)==1);
-    
-    I2C1->CR1|=1<<9;               //²úÉúÖÕÖ¹Ìõ¼þ          
+    uint8_t i = 0;
+
+    I2C1->CR1 |= 1 << 8; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+    while (((I2C1->SR1) & 1) == 0)
+        ; // ï¿½È´ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+
+    I2C1->DR = address; // ï¿½ï¿½ï¿½Íµï¿½Ö·
+    while ((((I2C1->SR1) >> 1) & 1) == 0)
+        ; // ï¿½È´ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Í½ï¿½ï¿½ï¿½   ï¿½ï¿½
+
+    I2C1->DR = reg_address; // ï¿½ï¿½ï¿½Í¼Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
+    I2C1->DR = data;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    while ((((I2C1->SR1) >> 2) & 1) == 1)
+        ;
+
+    I2C1->CR1 |= 1 << 9; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
 }
-uint16_t Hardare_ReadReg(uint8_t address,uint8_t reg_address)
+uint16_t Hardare_ReadReg(uint8_t address, uint8_t reg_address)
 {
-    uint16_t data=0;   
-    
-    I2C1->CR1|=1<<8; //²úÉúÆðÊ¼Ìõ¼þ
-    while(((I2C1->SR1)&1)==0);//µÈ´ýÆðÊ¼Ìõ¼þ·¢ËÍ
-    
-    I2C1->DR=address; //·¢ËÍµØÖ·
-    while((((I2C1->SR1)>>1)&1)==0);//µÈ´ýµØÖ··¢ËÍ½áÊø
-    
-    I2C1->DR=reg_address; //·¢ËÍ¼Ä´æÆ÷µØÖ· 
-    while((((I2C1->SR1)>>2)&1)==1);
-    
-    I2C1->CR1|=1<<9;               //²úÉúÖÕÖ¹Ìõ¼þ 
-    
-    
-    
-    
-    
-    
-    
-    
-    I2C1->CR1|=1<<10;//Ó¦´ðÊ¹ÄÜ
-    I2C1->CR1|=1<<8; //²úÉúÆðÊ¼Ìõ¼þ
-    while(((I2C1->SR1)&1)==0);//µÈ´ýÆðÊ¼Ìõ¼þ·¢ËÍ
+    uint16_t data = 0;
 
-    I2C1->DR=address|1; //·¢ËÍµØÖ·
-    while((((I2C1->SR1)>>1)&1)==1);//µÈ´ýµØÖ··¢ËÍ½áÊø
-         
-    I2C1->CR1&=~(1<<10);         //Ó¦´ðÊ§ÄÜ 
-    data=I2C1->DR;
-    while((((I2C1->SR1)>>2)&1)==1);
-    data=I2C1->DR;
-    I2C1->CR1|=1<<9;             //²úÉúÖÕÖ¹Ìõ¼þ  
-        data=I2C1->DR; 
-    while((((I2C1->SR1)>>6)&1)==0);
-    
+    I2C1->CR1 |= 1 << 8; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+    while (((I2C1->SR1) & 1) == 0)
+        ; // ï¿½È´ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+    I2C1->DR = address; // ï¿½ï¿½ï¿½Íµï¿½Ö·
+    while ((((I2C1->SR1) >> 1) & 1) == 0)
+        ; // ï¿½È´ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Í½ï¿½ï¿½ï¿½
+
+    I2C1->DR = reg_address; // ï¿½ï¿½ï¿½Í¼Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
+    while ((((I2C1->SR1) >> 2) & 1) == 1)
+        ;
+
+    I2C1->CR1 |= 1 << 9; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
+
+    I2C1->CR1 |= 1 << 10; // Ó¦ï¿½ï¿½Ê¹ï¿½ï¿½
+    I2C1->CR1 |= 1 << 8;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+    while (((I2C1->SR1) & 1) == 0)
+        ; // ï¿½È´ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+    I2C1->DR = address | 1; // ï¿½ï¿½ï¿½Íµï¿½Ö·
+    while ((((I2C1->SR1) >> 1) & 1) == 1)
+        ; // ï¿½È´ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Í½ï¿½ï¿½ï¿½
+
+    I2C1->CR1 &= ~(1 << 10); // Ó¦ï¿½ï¿½Ê§ï¿½ï¿½
+
+    data = I2C1->DR;
+    while ((((I2C1->SR1) >> 2) & 1) == 1)
+        ;
+    data = I2C1->DR;
+    I2C1->CR1 |= 1 << 9; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
+    data = I2C1->DR;
+    while ((((I2C1->SR1) >> 6) & 1) == 0)
+        ;
+
     return data;
 }

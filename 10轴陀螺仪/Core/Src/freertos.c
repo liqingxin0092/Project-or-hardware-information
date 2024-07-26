@@ -177,16 +177,12 @@ void ANAF(void const * argument)
 					}
 					__disable_irq();
 					--Uart.UartFifo.Cnt;
-					__enable_irq();
-
-//					HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13 );
-					
+					__enable_irq();					
 					 rel=Cmd_GetPkt(rxByte); // 移植 每收到1字节数据都填入该函数，当抓取到有效的数据包就会回调进入 Cmd_RxUnpack(U8 *buf, U8 DLen) 函数处理
 			}
 		}		
 		 USART_Printf( &huart2,"rel=%d  X=%.1f  Y=%.1f  Z=%.1f  \r\n",rel,tmpX ,tmpY,tmpZ);
     osDelay(500);
-		 
   }
   /* USER CODE END ANAF */
 }
