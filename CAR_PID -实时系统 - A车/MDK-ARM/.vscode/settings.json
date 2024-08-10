@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "stm32f4xx_it.h": "c",
+        "pid.h": "c",
+        "task.h": "c",
+        "optional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "system_error": "c",
+        "array": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "math.h": "c",
+        "main.h": "c"
+    }
+}
