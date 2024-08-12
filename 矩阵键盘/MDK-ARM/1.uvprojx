@@ -7,9 +7,10 @@
 
   <Targets>
     <Target>
-      <TargetName>chuan_PAO</TargetName>
+      <TargetName>1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -17,7 +18,7 @@
           <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32F1xx_DFP.2.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000-0x20004FFF) IROM(0x8000000-0x800FFFF)  CLOCK(8000000) CPUTYPE("Cortex-M3") TZ</Cpu>
+          <Cpu>IRAM(0x20000000-0x20004FFF) IROM(0x8000000-0x800FFFF) CLOCK(8000000) CPUTYPE("Cortex-M3") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -32,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32F103C8$SVD/STM32F103xx.svd</SFDFile>
+          <SFDFile>$$Device:STM32F103C8$SVD\STM32F103xx.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -47,8 +48,8 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>chuan_PAO\</OutputDirectory>
-          <OutputName>chuan_PAO</OutputName>
+          <OutputDirectory>1\</OutputDirectory>
+          <OutputName>1</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -137,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -324,8 +325,8 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
-            <v6Lang>1</v6Lang>
-            <v6LangP>1</v6LangP>
+            <v6Lang>5</v6Lang>
+            <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -390,26 +391,6 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
-              <FileName>OLED.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\OLED.h</FilePath>
-            </File>
-            <File>
-              <FileName>OLED_Data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\OLED_Data.h</FilePath>
-            </File>
-            <File>
-              <FileName>OLED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\OLED.c</FilePath>
-            </File>
-            <File>
-              <FileName>OLED_Data.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\OLED_Data.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -418,11 +399,6 @@
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/tim.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_it.c</FileName>
@@ -435,14 +411,14 @@
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
             </File>
             <File>
-              <FileName>MatrixKey.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\MatrixKey.h</FilePath>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\key.c</FilePath>
             </File>
             <File>
-              <FileName>MatrixKey.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\MatrixKey.c</FilePath>
+              <FileName>key.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Src\key.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -539,7 +515,7 @@
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
         <targetInfos>
-          <targetInfo name="chuan_PAO"/>
+          <targetInfo name="1"/>
         </targetInfos>
       </component>
     </components>

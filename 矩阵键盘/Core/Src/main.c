@@ -18,13 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "OLED.h"
-#include "MatrixKey.h"
+#include "key.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +43,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t flag;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -65,6 +63,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -87,60 +86,16 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  
-  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
-  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,1500);
-  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,1500);
-  
-   OLED_Init();
-   uint8_t Mood=0;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-      
-      Mood=Remapping(MatrixKey_GetValue());     //获取键值      默认值20
-      
-      if(Mood==0xff)    //A     某个需要读数的操作
-      {
-         HAL_Delay(400);
-         Get_Num();//得数
-          //   操作 num
-      }
-      else if(Mood==0xfe)    //B   充1000ms
-      {
-          HAL_Delay(40);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,GPIO_PIN_SET);
-          HAL_Delay(1000);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,GPIO_PIN_RESET);
-      }
-       else if(Mood==0xfd)    //C       发射
-      {
-          HAL_Delay(40);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_SET);
-          HAL_Delay(300);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_RESET);
-      }
-       else if(Mood==0xfa)    //D       
-      {
-            
-          //prog
-      }
-       else if(Mood==0xfc)    //*      
-      {
-            
-          //prog
-      }
-       else if(Mood==0xfb)    //#      
-      {
-            
-          //prog
-      }
+   KeyScan();
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
