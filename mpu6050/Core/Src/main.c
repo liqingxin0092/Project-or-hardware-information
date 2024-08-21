@@ -89,14 +89,6 @@ int main(void)
   SystemClock_Config();
   MX_GPIO_Init();
 
-    GPIOx_I2c_ToFast_Init();
-    
-    Hardare_WriteReg(MPU6050_ADDRESS,MPU6050_PWR_MGMT_1,1);
-//    Hardare_WriteReg(MPU6050_ADDRESS,MPU6050_SMPLRT_DIV,9);
-    
-    Test=Hardare_ReadReg(MPU6050_ADDRESS ,MPU6050_PWR_MGMT_1);
-     GPIOB->CRH=0x44444477; //PB8,9端口配置为复用开漏输出 50MHZ
-    GPIOB->ODR|=(1<<8)|(1<<9);//上拉
   while (1)
   {
 

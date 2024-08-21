@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "at24c128.h": "c",
+        "memory": "c",
+        "main.h": "c"
+    }
+}

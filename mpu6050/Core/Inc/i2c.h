@@ -23,8 +23,5 @@ uint8_t receive_ack(void);
 void WriteReg(uint8_t address,uint8_t reg_address,uint8_t data);
 uint16_t ReadReg(uint8_t address,uint8_t reg_address);
 void ReadRegs(uint8_t address,uint8_t reg_address,uint8_t *buffer,uint8_t lenth);
-//硬件i2c  //注意IO口不同
-void GPIOx_I2c_ToFast_Init(void);   //硬件初始化，注意是快速模式 30mhz
-void Hardare_WriteReg(uint8_t address,uint8_t reg_address,uint8_t data);
-uint16_t Hardare_ReadReg(uint8_t address,uint8_t reg_address);
+
 #endif
