@@ -26,14 +26,14 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>     //´®¿Ú´òÓ¡£¬¿ÉÄÜÓÐÎÊÌâ£¬Ä³Ð©ºº×Ö£¬Ð¡Êý
+#include <stdarg.h>     //ï¿½ï¿½ï¿½Ú´ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¬Ä³Ð©ï¿½ï¿½ï¿½Ö£ï¿½Ð¡ï¿½ï¿½
 char String[30];
 void USART_Printf( UART_HandleTypeDef * chuankou,char *format, ...)
 {
-	va_list arg;							//¶¨Òå¿É±ä²ÎÊýÁÐ±íÊý¾ÝÀàÐÍµÄ±äÁ¿arg
-	va_start(arg, format);					//´Óformat¿ªÊ¼£¬½ÓÊÕ²ÎÊýÁÐ±íµ½arg±äÁ¿
-	vsprintf(String, format, arg);			//Ê¹ÓÃvsprintf´òÓ¡¸ñÊ½»¯×Ö·û´®ºÍ²ÎÊýÁÐ±íµ½×Ö·ûÊý×éÖÐ
-	va_end(arg);						     	//½áÊø±äÁ¿arg
+	va_list arg;							//ï¿½ï¿½ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ±ï¿½ï¿½ï¿½arg
+	va_start(arg, format);					//ï¿½ï¿½formatï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Õ²ï¿½ï¿½ï¿½ï¿½Ð±ï¿½argï¿½ï¿½ï¿½ï¿½
+	vsprintf(String, format, arg);			//Ê¹ï¿½ï¿½vsprintfï¿½ï¿½Ó¡ï¿½ï¿½Ê½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	va_end(arg);						     	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½arg
 	HAL_UART_Transmit(chuankou, (uint8_t*)String, strlen(String), 200);
 }
 /* USER CODE END Includes */
@@ -87,6 +87,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -117,20 +118,19 @@ HAL_TIM_Base_Start(&htim1);
 HAL_TIM_IC_Start(&htim1,TIM_CHANNEL_3);
 HAL_TIM_IC_Start_IT(&htim1,TIM_CHANNEL_4);
   /* USER CODE END 2 */
-	
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET );   //³¬Éù²¨·¢³öÐÅºÅ
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET );   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½
 		uint16_t n=2500;
 		while(n--);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET );
 		
-		__HAL_TIM_SET_COUNTER(&htim1,0);     //Çå¿Õ¼ÆÊýÆ÷
+		__HAL_TIM_SET_COUNTER(&htim1,0);     //ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½
 		
-		USART_Printf( &huart2,"¾àÀëÊÇ£º%.1fcm\r\n",distance);
+		USART_Printf( &huart2,"ï¿½ï¿½ï¿½ï¿½ï¿½Ç£ï¿½%.1fcm\r\n",distance);
 		HAL_Delay(500);
     /* USER CODE END WHILE */
 
