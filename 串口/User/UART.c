@@ -37,7 +37,7 @@ int fputc(int ch,FILE *f)
 uint8_t arr[FIXED_NUMBER];
 void USART1_IRQHandler() // 接收中断
 {
-    if (((USART1->SR >> 5) & 1) == 1)
+    if ((USART1->SR >> 5) & 1)
     {
         uint8_t i;
         for (i = 0; i < FIXED_NUMBER - 1; i++)
