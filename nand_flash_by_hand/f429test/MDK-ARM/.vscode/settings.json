@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "string_view": "c",
+        "string": "c",
+        "main.h": "c"
+    }
+}
