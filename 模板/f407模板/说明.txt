@@ -1,0 +1,11 @@
+CubeMx仅供参考,切忌用它生成代码!!!!!!
+
+这个模板移植了以下功能:
+FreeRTOS                    // T
+USMART                      // T
+LCD                         // T
+屏载FLASH(字库)              // T
+LED                         // T
+KEY                         // T
+板载FLASH                   // T
+Touch                       // T

@@ -1,0 +1,3 @@
+这个文件给F429移植了FreeRTOS,USMART,SDRAM,LTDC.
+
+切忌用CubeMX生成代码,那个只是参考用的.

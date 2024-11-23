@@ -27,13 +27,8 @@
 
 SRAM_HandleTypeDef hsram1;
 
-/* FSMC initialization function */
 void MX_FSMC_Init(void)
 {
-  /* USER CODE BEGIN FSMC_Init 0 */
-
-  /* USER CODE END FSMC_Init 0 */
-
   FSMC_NORSRAM_TimingTypeDef Timing = {0};
   FSMC_NORSRAM_TimingTypeDef ExtTiming = {0};
 

@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "ltdc.h": "c",
+        "touch.h": "c"
+    }
+}

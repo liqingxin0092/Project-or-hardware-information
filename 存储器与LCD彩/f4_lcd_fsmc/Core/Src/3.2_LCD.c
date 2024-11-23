@@ -822,8 +822,6 @@ void LCD_Draw_Point_FSMC(uint16_t x, uint16_t y, uint16_t color)
  * @param color 颜色
  * @param mode 1:叠加 , 0:非叠加(就是带背景色)
  */
-/*背景色设置*/
-
 void LCD_ShowChar(uint16_t x, uint16_t y, uint8_t ascii, uint8_t size, uint16_t color, uint8_t mode)
 {
     const uint8_t *temp;

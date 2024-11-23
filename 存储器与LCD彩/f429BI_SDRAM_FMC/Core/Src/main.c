@@ -96,17 +96,17 @@ int main(void)
   MX_FMC_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  SDRAM_Init(&__SDRAM_handle, 683);
-  // *(volatile uint8_t *)(SDRAM_BASE+50) = 0x11;
-  // *(volatile uint8_t *)(SDRAM_BASE+51) = 0x22;
-  // a = *(volatile uint8_t *)(SDRAM_BASE+50);
-  // b = *(volatile uint8_t *)(SDRAM_BASE+51);
-  for (uint8_t i = 0; i < 50; i++)
-  {
-    testsram[i] = i * 2;
-  }
+  SDRAM_Init(&__SDRAM_handle, 677);
+   *(volatile uint8_t *)(SDRAM_BASE+50) = 0x11;
+   *(volatile uint8_t *)(SDRAM_BASE+51) = 0x22;
+   a = *(volatile uint8_t *)(SDRAM_BASE+50);
+   b = *(volatile uint8_t *)(SDRAM_BASE+51);
+//  for (uint8_t i = 0; i < 50; i++)
+//  {
+//    testsram[i] = i ;
+//  }
 
-  SDRAM_fmc_read(read_buffer, 0, 50);
+//  SDRAM_fmc_read(read_buffer, 0, 50);
 
   /* USER CODE END 2 */
 
