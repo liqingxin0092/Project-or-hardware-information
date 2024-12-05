@@ -67,9 +67,9 @@ uint8_t flag2;
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
 
@@ -99,18 +99,18 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   //  NAND_Init();
-  for (uint16_t i = 0; i < 512; i++)
-  {
-    write_buffer[i] = i;
-  }
-  //  flag1 = NAND_Write_Page(33, 0, write_buffer, 512);
-  //   flag1 = NAND_EraseBlock(0);
-  //    flag2 = NAND_page_read(34, 0, read_buffer, 512);
-  //  flag1 = NAND_CopyPageWithoutWrite(33, 34);
-  my_mem_init(SRAMIN); // 初始化内部内存池
-  FTL_Init();
-  flag1 = FTL_WriteSectors(write_buffer, 100, 256, 2);
-  flag2 = FTL_ReadSectors(read_buffer, 100, 256, 2);
+//  for (uint16_t i = 0; i < 512; i++)
+//  {
+//    write_buffer[i] = i;
+//  }
+//  //  flag1 = NAND_Write_Page(33, 0, write_buffer, 512);
+//  //   flag1 = NAND_EraseBlock(0);
+//  //    flag2 = NAND_page_read(34, 0, read_buffer, 512);
+//  //  flag1 = NAND_CopyPageWithoutWrite(33, 34);
+//  my_mem_init(SRAMIN); // 初始化内部内存池
+//  FTL_Init();
+//  flag1 = FTL_WriteSectors(write_buffer, 100, 256, 2);
+//  flag2 = FTL_ReadSectors(read_buffer, 100, 256, 2);
 
   /* USER CODE END 2 */
 
@@ -126,22 +126,22 @@ int main(void)
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-   */
+  */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
+  * in the RCC_OscInitTypeDef structure.
+  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -156,15 +156,16 @@ void SystemClock_Config(void)
   }
 
   /** Activate the Over-Drive mode
-   */
+  */
   if (HAL_PWREx_EnableOverDrive() != HAL_OK)
   {
     Error_Handler();
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
@@ -181,9 +182,9 @@ void SystemClock_Config(void)
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -195,14 +196,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */

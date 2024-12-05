@@ -302,6 +302,51 @@ void LTDC_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t colo
         }
     }
 }
+static uint32_t LCD_Pow(uint8_t m, uint8_t n)
+{
+    uint32_t result = 1;
+    while (n--)
+        result *= m;
+    return result;
+}
+/**
+ * @brief 显示数字
+ *
+ * @param x
+ * @param y
+ * @param num
+ * @param len 数字的位数
+ * @param size
+ * @param mode
+ * @param mode: [7]:0,不填充;1,填充0.
+ *              [6:1]:保留
+ *              [0]:0,非叠加显示;1,叠加显示.
+ */
+void LTDC_ShowxNum(uint16_t x, uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint8_t mode, uint8_t color)
+{
+    uint8_t t, temp;
+    uint8_t enshow = 0;
+    for (t = 0; t < len; t++)
+    {
+        temp = (num / LCD_Pow(10, len - t - 1)) % 10;
+        if (enshow == 0 && t < (len - 1))
+        {
+            if (temp == 0)
+            {
+                if (mode & 0X80)
+                    LTDC_ShowChar(x + (size / 2) * t,  y, '0',size, color, mode & 0X01);
+                
+                else
+                    LTDC_ShowChar(x + (size / 2) * t,  y, ' ',size, color, mode & 0X01);
+
+                continue;
+            }
+            else
+                enshow = 1;
+        }
+        LTDC_ShowChar(x + (size / 2) * t,  y, temp+'0',size, color, mode & 0X01);
+    }
+}
 /**
  * @brief 可以用来放图片
  *
@@ -375,7 +420,6 @@ void LTDC_turn_area_color(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, ui
 
 void lcd_draw_hline(uint16_t x, uint16_t y, uint16_t len, uint16_t color)
 {
-    if ((len == 0) || (x > LTDC_PWIDTH) || (y >LTDC_PHEIGHT))return;
     DMA2D_fill(x, y, x + len - 1, y, color);
 }
 
@@ -421,7 +465,6 @@ void lcd_draw_bline(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t 
     delta_y = y2 - y1;
     row = x1;
     col = y1;
-
     if (delta_x > 0)
     {
         incx = 1;                             /* 设置单步方向 */

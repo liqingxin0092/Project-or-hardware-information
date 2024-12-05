@@ -194,7 +194,6 @@ all interrupt callbacks are set to the corresponding weak functions:
   * @brief TIM HAL module driver
   * @{
   */
-
 #ifdef HAL_TIM_MODULE_ENABLED
 
 /* Private typedef -----------------------------------------------------------*/

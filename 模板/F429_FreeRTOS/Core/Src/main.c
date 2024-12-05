@@ -1,10 +1,15 @@
 #include "gpio.h"
 #include "my_freertos.h"
 #include "usmart.h"
-#include "LTDC.h"
 #include "SDRAM.h"
 #include "fmc.h"
 #include "touch.h"
+#include "ftl.h"
+#include "w25qxx.h"
+#include "TF-card.h"
+#include "exfuns.h"
+#include "fonts.h"
+#include "text.h"
 
 void SystemClock_Config(void);
 
@@ -16,12 +21,17 @@ int main(void)
   MX_GPIO_Init();                   // SDRAM GPIO时钟配置,LCD背光IO配置
   delay_init(180);                  // 初始化延时
   usmart_dev.init(90);              // 初始化USMART,这里是定时器频率
-  MX_FMC_Init();                    // SDRAM接口初始化
-  SDRAM_Init(&__SDRAM_handle, 100); // 初始化SDRAM
+  MX_FMC_Init();                    // SDRAM和NAND FLASH初始化
+  SDRAM_Init(&__SDRAM_handle, 250); // 初始化SDRAM
   MX_LTDC_Init(0);                  // 初始化LTDC
-  Touch_init();
-
-  freertos_demo(); // FreeRTOS开始调度
+  Touch_init();                     // 初始化触摸IC
+  W25QXX_Init();                    // spi flash初始化
+  exfuns_init();                    // 为fatfs相关变量申请内存
+  f_mount(fs[0], "0:", 1);          // 挂载SD卡
+  f_mount(fs[1], "1:", 1);          // 挂载NAND FLASH
+  fonts_init();                     // 字库初始化
+  
+  freertos_start();                 // FreeRTOS开始调度
 }
 
 void SystemClock_Config(void)

@@ -1,6 +1,4 @@
-#include "main.h"
 #include "gpio.h"
-#include "stdio.h"
 #include "my_freertos.h"
 #include "usmart.h"
 #include "led.h"
@@ -8,11 +6,15 @@
 #include "touch.h"
 #include "w25qxx.h"
 #include "GBK_LibDrive.h"
+#include "TF-card.h"
+#include "exfuns.h"
+#include "malloc.h"
 
 void SystemClock_Config(void);
 
 int main(void)
 {
+    
   HAL_Init();
   SystemClock_Config();  // 时钟初始化
   RCC_GPIOx_Init();      // 开GPIO时钟
@@ -25,8 +27,13 @@ int main(void)
   GBK_Lib_Init();        // 硬件GBK字库初始化
   W25QXX_Init();         // W25QXX初始化
   tp_dev.init();         // 触摸屏初始化
+
+  my_mem_init(SRAMIN);                    /* 初始化内部SRAM内存池 */
     
-  freertos_demo();       // 开始任务调度
+  exfuns_init();                  /* 为fatfs相关变量申请内存 */
+  f_mount(fs[0], "0:", 1);        /* 挂载SD卡 */
+  
+  freertos_demo(); // 开始任务调度
 }
 
 void SystemClock_Config(void)

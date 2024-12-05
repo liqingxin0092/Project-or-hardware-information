@@ -986,4 +986,3 @@ void LCD_DrawPoint(uint16_t x, uint16_t y)
     LCD->command = LCD_WIRTE_GRAM;
     LCD->data = POINT_COLOR;
 }
-

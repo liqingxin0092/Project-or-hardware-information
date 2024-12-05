@@ -6,6 +6,8 @@
 #include "GBK_LibDrive.h"
 #include "key.h"
 #include "touch.h"
+#include "TF-card.h"
+
 /*这两个文件注意起名字,头文件不区分大小写*/
 
 /* START_TASK 任务 配置
@@ -55,6 +57,7 @@ void start_task(void *pvParameters)
   taskEXIT_CRITICAL();            // 退出临界区
 }
 
+uint8_t buff[512];
 /*任务1延时相对延时函数*/
 void task1(void *pvParameters)
 {
@@ -62,9 +65,8 @@ void task1(void *pvParameters)
   while (1)
   {
         tp_dev.scan(0);
-        if(tp_dev.sta&TP_PRES_DOWN)
-          TP_Draw_Big_Point(tp_dev.x[0],tp_dev.y[0],pen_color);		//画图	
-        vTaskDelay(10);
+        TOUCH_Line( pen_color);		//画图	
+        vTaskDelay(15);
   }
 }
 

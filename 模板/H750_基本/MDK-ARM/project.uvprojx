@@ -54,7 +54,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
+          <BrowseInformation>0</BrowseInformation>
           <ListingPath>..\Output\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -187,7 +187,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H750xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\User;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include</IncludePath>
+              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include;..\Peripheral\SDMMC;..\User;..\Sys\Delay;..\Sys\USMART;..\Sys\Uart;..\FreeRTOS\portable\RVDS\ARM_CM7;..\FreeRTOS\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -396,11 +396,6 @@
               <FilePath>..\User\main.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7xx_hal_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\User\stm32h7xx_hal_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>stm32h7xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\stm32h7xx_it.c</FilePath>
@@ -409,6 +404,31 @@
               <FileName>stm32h7xx_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\User\stm32h7xx_it.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32h7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\system_stm32h7xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>btim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\btim.c</FilePath>
+            </File>
+            <File>
+              <FileName>malloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\malloc.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\my_freertos.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7xx_hal_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\stm32h7xx_hal_conf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -520,20 +540,147 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_uart_ex.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Driver/CMSIS</GroupName>
-          <Files>
             <File>
-              <FileName>system_stm32h7xx.c</FileName>
+              <FileName>stm32h7xx_hal_sd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Driver\BSP\system_stm32h7xx.c</FilePath>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7xx_hal_sd_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sd_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7xx_ll_delayblock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_delayblock.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7xx_ll_sdmmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_sdmmc.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Peripheral</GroupName>
+          <Files>
+            <File>
+              <FileName>sdmmc_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Peripheral\SDMMC\sdmmc_sdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_sdcard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Peripheral\SDMMC\sdmmc_sdcard.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SYS</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Sys\Delay\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Sys\Delay\delay.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Sys\Uart\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Sys\Uart\usart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>USMART</GroupName>
+          <Files>
+            <File>
+              <FileName>usmart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Sys\USMART\usmart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usmart_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Sys\USMART\usmart_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>usmart_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Sys\USMART\usmart_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>usmart_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Sys\USMART\usmart_str.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>RTOS_CORE</GroupName>
+          <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\list.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>RTOS_PORT</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\portable\RVDS\ARM_CM7\port.c</FilePath>
+            </File>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\portable\MemMang\heap_4.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

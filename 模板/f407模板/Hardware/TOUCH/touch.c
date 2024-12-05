@@ -493,3 +493,82 @@ u8 TP_Init(void)
 	TP_Get_Adjdata();
 	return 1;
 }
+
+void lcd_draw_bline(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color)
+{
+    uint16_t t;
+    int xerr = 0, yerr = 0, delta_x, delta_y, distance;
+    int incx, incy, row, col;
+    delta_x = x2 - x1;                        /* 计算坐标增量 */
+    delta_y = y2 - y1;
+    row = x1;
+    col = y1;
+    if (delta_x > 0)
+    {
+        incx = 1;                             /* 设置单步方向 */
+    }
+    else if (delta_x == 0)
+    {
+        incx = 0;                             /* 垂直线 */
+    }
+    else
+    {
+        incx = -1;
+        delta_x = -delta_x;
+    }
+
+    if (delta_y > 0)
+    {
+        incy = 1;
+    }
+    else if (delta_y == 0)
+    {
+        incy = 0;                               /* 水平线 */
+    }
+    else
+    {
+        incy = -1;
+        delta_y = -delta_y;
+    }
+    if (delta_x > delta_y)
+        distance = delta_x;                     /* 选取基本增量坐标轴 */
+    else
+        distance = delta_y;
+    for (t = 0; t <= distance + 1; t++)         /* 画线输出 */
+    {
+        TP_Draw_Big_Point(row, col, color);
+        xerr += delta_x;
+        yerr += delta_y;
+        if (xerr > distance)
+        {
+            xerr -= distance;
+            row += incx;
+        }
+        if (yerr > distance)
+        {
+            yerr -= distance;
+            col += incy;
+        }
+    }
+}
+
+void TOUCH_Line( uint16_t color)
+{
+   static uint16_t lastpos[2]; 
+    if(tp_dev.sta&TP_PRES_DOWN)
+    {
+        if (lastpos[0] == 0xFFFF)
+        {
+            lastpos[0] = tp_dev.x[0];
+            lastpos[1] = tp_dev.y[0];
+        }
+        lcd_draw_bline(lastpos[0], lastpos[1], tp_dev.x[0], tp_dev.y[0], color); /* 画线 */
+        lastpos[0] = tp_dev.x[0];
+        lastpos[1] = tp_dev.y[0];
+    }
+    else 
+    {
+        lastpos[0] = 0xFFFF;
+    }
+        
+}

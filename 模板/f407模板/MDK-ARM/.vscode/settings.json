@@ -4,6 +4,8 @@
         "led.h": "c",
         "main.h": "c",
         "vector": "cpp",
-        "spi.h": "c"
+        "spi.h": "c",
+        "tf-card.h": "c",
+        "w25qxx.h": "c"
     }
 }

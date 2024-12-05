@@ -1,22 +1,31 @@
-#include "stm32h7xx.h"                  // Device header   
+#include "sdmmc_sdcard.h"    
+#include "usmart.h"
+#include "delay.h"
 
-void SystemClock_Config(void);
 
+/*不用的功能注意注释*/
 int main()
 {
-    HAL_Init();
-    SystemClock_Config();
+    HAL_Init();            
+    SystemClock_Config();             // 时钟初始化
+    RCC_GPIO_Init();                  // 初始化GPIO时钟
+    MX_USART1_UART_Init();            // 串口初始化
+    delay_init(480);                  // 初始化延时
+    usmart_dev.init(240);             // 初始化USMART,这里是定时器频率
+    SD_Init();                        // 初始化SD卡.
+    
     while(1)
     {
-        HAL_Delay(1000);
+        delay_ms(500);
         GPIOC->ODR^=1<<13;
     }
 
 } 
 
-void HAL_MspInit(void)
+void RCC_GPIO_Init(void)
 {
     __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();   //使能GPIOD时钟
     
     GPIO_InitTypeDef GPIO_Struct={0};
     GPIO_Struct.Mode        = GPIO_MODE_OUTPUT_PP;

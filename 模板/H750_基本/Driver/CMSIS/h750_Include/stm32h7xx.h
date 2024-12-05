@@ -1,61 +1,46 @@
-/**
-  ******************************************************************************
-  * @file    stm32h7xx.h
-  * @author  MCD Application Team
-  * @brief   CMSIS STM32H7xx Device Peripheral Access Layer Header File.
-  *
-  *          The file is the unique include file that the application programmer
-  *          is using in the C source code, usually in main.c. This file contains:
-  *           - Configuration section that allows to select:
-  *              - The STM32H7xx device used in the target application
-  *              - To use or not the peripheral's drivers in application code(i.e.
-  *                code will be based on direct access to peripheral's registers
-  *                rather than drivers API), this option is controlled by
-  *                "#define USE_HAL_DRIVER"
-  *
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-
-/** @addtogroup CMSIS
-  * @{
-  */
-
-/** @addtogroup stm32h7xx
-  * @{
-  */
-
 #ifndef STM32H7xx_H
 #define STM32H7xx_H
 
-#ifdef __cplusplus
- extern "C" {
-#endif /* __cplusplus */
-
-/** @addtogroup Library_configuration_section
-  * @{
-  */
-
-/**
-  * @brief STM32 Family
-  */
 #if !defined  (STM32H7)
 #define STM32H7
 #endif /* STM32H7 */
 
+#include "stdint.h"
+void SystemClock_Config(void);
+void RCC_GPIO_Init(void);
 
-/* Uncomment the line below according to the target STM32H7 device used in your
-   application
-  */
+typedef int32_t  s32;
+typedef int16_t s16;
+typedef int8_t  s8;
+
+typedef const int32_t sc32;  
+typedef const int16_t sc16;  
+typedef const int8_t sc8;  
+
+typedef volatile int32_t  vs32;
+typedef volatile int16_t  vs16;
+typedef volatile int8_t   vs8;
+
+typedef volatile int32_t vsc32;  
+typedef volatile int16_t vsc16; 
+typedef volatile int8_t vsc8;   
+
+typedef uint32_t  u32;
+typedef uint16_t u16;
+typedef uint8_t  u8;
+
+typedef const uint32_t uc32;  
+typedef const uint16_t uc16;  
+typedef const uint8_t uc8; 
+
+typedef volatile uint32_t  vu32;
+typedef volatile uint16_t vu16;
+typedef volatile uint8_t  vu8;
+
+typedef volatile uint32_t vuc32;  
+typedef volatile uint16_t vuc16; 
+typedef volatile uint8_t vuc8; 
+
 
 #if !defined (STM32H743xx) && !defined (STM32H753xx)  && !defined (STM32H750xx) && !defined (STM32H742xx) && \
     !defined (STM32H745xx) && !defined (STM32H745xG)  && !defined (STM32H755xx)  && !defined (STM32H747xx) && !defined (STM32H747xG)&& !defined (STM32H757xx) && \
@@ -282,10 +267,6 @@ typedef enum
  #include "stm32h7xx_hal.h"
 #endif /* USE_HAL_DRIVER */
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* STM32H7xx_H */
 /**

@@ -65,14 +65,17 @@ void task1(void *pvParameters)
     vTaskDelay(20);
   }
 }
-
+char task_buffer[300];
 /*任务二具体实现*/
 void task2(void *pvParameters)
 {
-    uint8_t flag1=0;
+  uint8_t flag1=0;
   while (1)
   {
+//      vTaskList(task_buffer);
+//      printf("%s\r\n",task_buffer);
     LTDC_turn_area_color(1005, 586, 1023, 599, YELLOW, BLUE,&flag1);
+      
     taskENTER_CRITICAL();  //进入临界区
     if(KEY_Scan(0))
         LTDC_CLear(background_color);
@@ -81,13 +84,15 @@ void task2(void *pvParameters)
         LTDC_CLear(background_color);
         tp_dev.x[0]=1;
     }
-      taskEXIT_CRITICAL();            //退出临界区
+    
+    taskEXIT_CRITICAL();  //退出临界区
+    
     vTaskDelay(200);
    }
 }
 
 /*创建开始任务并调度*/
-void freertos_demo(void)
+void freertos_start(void)
 {
   xTaskCreate(start_task,          /* 任务函数 */
               "start_task",          /* 任务名称 */

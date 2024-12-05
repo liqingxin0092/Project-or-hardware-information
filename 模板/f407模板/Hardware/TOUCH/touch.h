@@ -80,5 +80,7 @@ void TP_Adj_Info_Show(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16
 // 电阻屏/电容屏 共用函数
 u8 TP_Scan(u8 tp); // 扫描
 u8 TP_Init(void);  // 初始化
+void lcd_draw_bline(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
+void TOUCH_Line( uint16_t color);
 
 #endif

@@ -9,3 +9,5 @@ LED                         // T
 KEY                         // T
 板载FLASH                   // T
 Touch                       // T
+TF卡                        // T
+FATFS           //这个下载时间很长

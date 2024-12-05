@@ -311,7 +311,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_FULL_LL_DRIVER,USE_HAL_DRIVER,STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;..\Drivers\CMSIS\f429_include;..\Drivers\CMSIS\Include;..\Drivers\STM32F4xx_HAL_Driver\Inc;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\Drivers\STM32F4xx_HAL_Driver\Inc;..\USMART</IncludePath>
+              <IncludePath>../Core/Inc;..\Drivers\CMSIS\f429_include;..\Drivers\CMSIS\Include;..\Drivers\STM32F4xx_HAL_Driver\Inc;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\Drivers\STM32F4xx_HAL_Driver\Inc;..\USMART;..\Hardware;..\Hardware\SPI;..\Hardware\TEXT;..\Hardware\TF-Card;..\Hardware\FATFS\exfuns;..\Hardware\FATFS\source</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -610,6 +610,31 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_fmc.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_hal_nand.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_nand.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_ll_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_ll_sdmmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_sdmmc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -699,6 +724,76 @@
               <FileName>usmart_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USMART\usmart_str.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Hardware</GroupName>
+          <Files>
+            <File>
+              <FileName>fsmc_nand.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\fsmc_nand.c</FilePath>
+            </File>
+            <File>
+              <FileName>ftl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\ftl.c</FilePath>
+            </File>
+            <File>
+              <FileName>w25qxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\w25qxx.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\SPI\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\TEXT\fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>TF-card.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\TF-Card\TF-card.c</FilePath>
+            </File>
+            <File>
+              <FileName>exfuns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FATFS\exfuns\exfuns.c</FilePath>
+            </File>
+            <File>
+              <FileName>fattester.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FATFS\exfuns\fattester.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FATFS\source\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FATFS\source\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FATFS\source\ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>text.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\TEXT\text.c</FilePath>
+            </File>
+            <File>
+              <FileName>myffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\FATFS\exfuns\myffunicode.c</FilePath>
             </File>
           </Files>
         </Group>

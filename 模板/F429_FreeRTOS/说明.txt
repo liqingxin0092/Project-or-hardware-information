@@ -1,3 +1,14 @@
-这个文件给F429移植了FreeRTOS,USMART,SDRAM,LTDC,Touch.
+注意:
+切忌用CubeMX生成代码,那个只是参考用的!!!!!
+不要让触摸屏的引脚短接,否则触摸屏会失效!!
 
-切忌用CubeMX生成代码,那个只是参考用的.
+这个文件给F429移植了:
+FreeRTOS,
+USMART,
+SDRAM,
+LTDC,
+Touch,
+nand flash,  //文件系统
+spi flash,   //字库
+sd card,     //文件系统
+
