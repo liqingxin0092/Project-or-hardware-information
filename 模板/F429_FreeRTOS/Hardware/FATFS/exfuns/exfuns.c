@@ -4,6 +4,7 @@
 #include "exfuns.h"
 #include "fattester.h"
 
+UINT br,bw;			//读写变量
 
 #define FILE_MAX_TYPE_NUM       7       /* 最多FILE_MAX_TYPE_NUM个大类 */
 #define FILE_MAX_SUBT_NUM       7       /* 最多FILE_MAX_SUBT_NUM个小类 */

@@ -248,7 +248,7 @@ void LTDC_ShowString(uint16_t x, uint16_t y, uint16_t width, uint16_t height, ui
  * @param ey
  * @param color
  */
-void DMA2D_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t color)
+void DMA2D_fill(u16 sx, u16 sy, u16 ex, u16 ey, u32 color)
 {
   uint32_t psx, psy, pex, pey;
 
@@ -356,7 +356,7 @@ void LTDC_ShowxNum(uint16_t x, uint16_t y, uint32_t num, uint8_t len, uint8_t si
  * @param ey
  * @param color
  */
-void DMA2D_fill_color(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height, const unsigned char *source_addr)
+void DMA2D_fill_color(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height, const unsigned short *source_addr)
 {
   uint32_t psx, psy, pex, pey;
 
@@ -539,3 +539,22 @@ void TOUCH_Line( uint8_t size)
             }
         }
 }
+
+u32 LTDC_read_point(uint16_t x,uint16_t y)
+{
+#if DISPLAY_DIR==0 //横屏
+    return *(uint16_t *)((uint32_t)RGB_GRAM + 2 * (LTDC_PWIDTH * y + x));
+#elif DISPLAY_DIR==1 //竖屏
+    return *(uint16_t *)((uint32_t)RGB_GRAM + 2 * (LTDC_PWIDTH * (LTDC_PHEIGHT - x - 1) + y)); 
+#endif
+}
+
+void LTDC_DrawPoint(u16 x, u16 y, u32 color)
+{
+#if DISPLAY_DIR==0 //横屏
+    *(uint16_t *)((uint32_t)RGB_GRAM + 2 * (LTDC_PWIDTH * y + x))=color;
+#elif DISPLAY_DIR==1 //竖屏
+    *(uint16_t *)((uint32_t)RGB_GRAM + 2 * (LTDC_PWIDTH * (LTDC_PHEIGHT - x - 1) + y))=color; 
+#endif
+}
+

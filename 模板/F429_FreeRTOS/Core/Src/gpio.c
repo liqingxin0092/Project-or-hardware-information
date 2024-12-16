@@ -63,3 +63,4 @@ uint8_t KEY_Scan(uint8_t mode)
 	return 0; // 无按键按下
 }
 
+

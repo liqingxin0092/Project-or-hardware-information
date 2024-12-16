@@ -54,7 +54,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath>..\Output\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -183,7 +183,7 @@
             <hadIRAM>1</hadIRAM>
             <hadXRAM>1</hadXRAM>
             <uocXRam>0</uocXRam>
-            <RvdsVP>3</RvdsVP>
+            <RvdsVP>2</RvdsVP>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H750xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include;..\Peripheral\SDMMC;..\User;..\Sys\Delay;..\Sys\USMART;..\Sys\Uart;..\FreeRTOS\portable\RVDS\ARM_CM7;..\FreeRTOS\include</IncludePath>
+              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include;..\Peripheral\SDMMC;..\User;..\Sys\Delay;..\Sys\USMART;..\Sys\Uart;..\FreeRTOS\portable\RVDS\ARM_CM7;..\FreeRTOS\include;..\Peripheral\sd card;..\Peripheral\W25Q64;..\Peripheral\LCD</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -560,6 +560,16 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_sdmmc.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32h7xx_hal_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7xx_hal_spi_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -568,12 +578,27 @@
             <File>
               <FileName>sdmmc_sdcard.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Peripheral\SDMMC\sdmmc_sdcard.c</FilePath>
+              <FilePath>..\Peripheral\sd card\sdmmc_sdcard.c</FilePath>
             </File>
             <File>
-              <FileName>sdmmc_sdcard.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Peripheral\SDMMC\sdmmc_sdcard.h</FilePath>
+              <FileName>qspi_w25q64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Peripheral\W25Q64\qspi_w25q64.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Peripheral\LCD\lcd_fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_image.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Peripheral\LCD\lcd_image.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_spi_154.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Peripheral\LCD\lcd_spi_154.c</FilePath>
             </File>
           </Files>
         </Group>

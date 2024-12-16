@@ -9,6 +9,8 @@
 #define MY_FATFS_TEST 1
 #include "delay.h"
 #include "fattester.h"
+
+
 /*这里声明要用到的函数*/
 extern void write_addr(uint32_t addr, uint32_t val); //改某个地方的数
 extern uint32_t read_addr(uint32_t addr);            //读某个地方的数

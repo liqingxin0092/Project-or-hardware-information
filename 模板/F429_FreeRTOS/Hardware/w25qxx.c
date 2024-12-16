@@ -23,7 +23,7 @@ void W25QXX_Init(void)
 	W25QXX_CS = 1;				   // SPI FLASH不选中
 	SPI1_Init();				   // 初始化SPI
 	W25QXX_TYPE = W25QXX_ReadID(); // 读取FLASH ID.
-    printf("\r\nSPI FLASH (W25Q64)ID:%d \r\n",W25QXX_TYPE);
+    printf("\r\nSPI FLASH (W25Q64)ID:%#x \r\n",W25QXX_TYPE);
 }
 
 /************************************************************************/
@@ -379,10 +379,3 @@ void W25QXX_WAKEUP(void)
 	delay_us(3);							   // 等待TRES1
 }
 
-/************************************************************************/
-
-// DevEBox  大越创新
-// 淘宝店铺：mcudev.taobao.com
-// 淘宝店铺：shop389957290.taobao.com
-
-/************************************************************************/

@@ -267,6 +267,58 @@ typedef enum
  #include "stm32h7xx_hal.h"
 #endif /* USE_HAL_DRIVER */
 
+#define GPIO_A 				0
+#define GPIO_B 				1
+#define GPIO_C				2
+#define GPIO_D 				3
+#define GPIO_E 				4
+#define GPIO_F 				5
+#define GPIO_G 				6 
+#define GPIO_H 				7 
+#define GPIO_I 				8 
+
+#define FTIR   				1  		//下降沿触发
+#define RTIR   				2  		//上升沿触发
+
+//GPIO设置专用宏定义
+#define GPIO_MODE_IN    	0		//普通输入模式
+#define GPIO_MODE_OUT		1		//普通输出模式
+#define GPIO_MODE_AF		2		//AF功能模式
+#define GPIO_MODE_AIN		3		//模拟输入模式
+
+#define GPIO_SPEED_5M		0		//GPIO速度(低速,5M)
+#define GPIO_SPEED_25M		1		//GPIO速度(中速,25M)
+#define GPIO_SPEED_50M		2		//GPIO速度(快速,50M)
+#define GPIO_SPEED_100M		3		//GPIO速度(高速,100M)  
+
+#define GPIO_PUPD_NONE		0		//不带上下拉
+#define GPIO_PUPD_PU		1		//上拉
+#define GPIO_PUPD_PD		2		//下拉
+#define GPIO_PUPD_RES		3		//保留 
+
+#define GPIO_OTYPE_PP		0		//推挽输出
+#define GPIO_OTYPE_OD		1		//开漏输出 
+
+//GPIO引脚编号定义
+#define PIN0				1<<0
+#define PIN1				1<<1
+#define PIN2				1<<2
+#define PIN3				1<<3
+#define PIN4				1<<4
+#define PIN5				1<<5
+#define PIN6				1<<6
+#define PIN7				1<<7
+#define PIN8				1<<8
+#define PIN9				1<<9
+#define PIN10				1<<10
+#define PIN11				1<<11
+#define PIN12				1<<12
+#define PIN13				1<<13
+#define PIN14				1<<14
+#define PIN15				1<<15 
+void GPIO_AF_Set(GPIO_TypeDef* GPIOx,u8 BITx,u8 AFx);//注意:在输入模式(普通输入/模拟输入)下,OTYPE和OSPEED参数无效!!
+void GPIO_Set(GPIO_TypeDef* GPIOx,u32 BITx,u32 MODE,u32 OTYPE,u32 OSPEED,u32 PUPD);
+
 
 #endif /* STM32H7xx_H */
 /**

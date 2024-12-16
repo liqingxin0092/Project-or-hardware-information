@@ -10,9 +10,13 @@
 #include "exfuns.h"
 #include "fonts.h"
 #include "text.h"
+#include "malloc.h"
+#include "stmflash.h"
 
 void SystemClock_Config(void);
 
+u8 write_buffer[12]={0,1,2,3,4,5,6,7,8,9,10,11};
+u8 read_buffer[12];
 int main(void)
 {
   HAL_Init();                       // HAL库初始化
@@ -29,8 +33,11 @@ int main(void)
   exfuns_init();                    // 为fatfs相关变量申请内存
   f_mount(fs[0], "0:", 1);          // 挂载SD卡
   f_mount(fs[1], "1:", 1);          // 挂载NAND FLASH
+  my_mem_init(SRAMIN);		//初始化内部内存池
+  my_mem_init(SRAMCCM);		//初始化CCM内存池 
   fonts_init();                     // 字库初始化
-  
+//    
+//  stmflash_read(ADDR_FLASH_SECTOR_11,(u32*)read_buffer,3);
   freertos_start();                 // FreeRTOS开始调度
 }
 
@@ -90,4 +97,110 @@ void Error_Handler(void)
   {
   }
   /* USER CODE END Error_Handler_Debug */
+}
+
+/**
+ * @brief       执行: WFI指令(执行完该指令进入低功耗状态, 等待中断唤醒)
+ * @param       无
+ * @retval      无
+ */
+void sys_wfi_set(void)
+{
+    __ASM volatile("wfi");
+}
+
+void sys_standby(void)
+{
+    RCC->APB1ENR |= 1 << 28;    /* 使能电源时钟 */
+    PWR->CSR |= 1 << 8;         /* 设置WKUP用于唤醒 */
+    PWR->CR |= 1 << 2;          /* 清除WKUP 标志 */
+    PWR->CR |= 1 << 1;          /* PDDS = 1, 允许进入深度睡眠模式(PDDS) */
+    SCB->SCR |= 1 << 2;         /* 使能SLEEPDEEP位 (SYS->CTRL) */
+    sys_wfi_set();              /* 执行WFI指令, 进入待机模式 */
+}
+/**
+ * @brief       关闭所有中断(但是不包括fault和NMI中断)
+ * @param       无
+ * @retval      无
+ */
+void sys_intx_disable(void)
+{
+    __ASM volatile("cpsid i");
+}
+
+/**
+ * @brief       开启所有中断
+ * @param       无
+ * @retval      无
+ */
+void sys_intx_enable(void)
+{
+    __ASM volatile("cpsie i");
+}
+/**
+ * @brief       进入CPU睡眠模式
+ * @param       无
+ * @retval      无
+ */
+void pwr_enter_sleep(void)
+{
+    EXTI->PR = 0;   /* 清除WKUP上的中断标志位 */
+    sys_wfi_set();      /* 执行WFI指令, 进入待机模式 */
+}
+
+/**
+ * @brief       进入停止模式
+ * @param       无
+ * @retval      无
+ */
+void pwr_enter_stop(void)
+{
+    RCC->APB1ENR |= 1 << 28;        /* 使能电源时钟 */
+    EXTI->PR = 0;   /* 清除WKUP上的中断标志位 */
+
+    PWR->CR |= 1 << 0;              /* LPDS=1, 停止模式下电压调节器处于低功耗模式 */
+    PWR->CR &= ~(1 << 1);           /* PDDS=0, CPU深度睡眠时进入停止模式 */
+    SCB->SCR |= 1 << 2;             /* 使能SLEEPDEEP位 */
+
+    sys_wfi_set();                  /* 执行WFI指令, 进入待机模式 */
+    
+    SCB->SCR &= ~(1 << 2);          /* 关闭SLEEPDEEP位 */
+}
+
+/**
+ * @brief       进入待机模式
+ * @param       无
+ * @retval      无
+ */
+void pwr_enter_standby(void)
+{
+    uint32_t tempreg;   /* 零时存储寄存器值用 */
+
+    EXTI->PR = 0;   /* 清除WKUP上的中断标志位 */
+    
+    /* STM32F4/F7/H7,当开启了RTC相关中断后,必须先关闭RTC中断,再清中断标志位,然后重新设置
+     * RTC中断,再进入待机模式才可以正常唤醒,否则会有问题.
+     */
+    PWR->CR |= 1 << 8;          /* 后备区域写使能 */
+    /* 关闭RTC寄存器写保护 */
+    RTC->WPR = 0xCA;
+    RTC->WPR = 0x53;
+    tempreg = RTC->CR & (0X0F << 12);   /* 记录原来的RTC中断设置 */
+    RTC->CR &= ~(0XF << 12);    /* 关闭RTC所有中断 */
+    RTC->ISR &= ~(0X3F << 8);   /* 清除所有RTC中断标志. */
+    RTC->CR |= tempreg;         /* 重新设置RTC中断 */
+    RTC->WPR = 0xFF;            /* 使能RTC寄存器写保护 */
+    
+    sys_standby();              /* 进入待机模式 */
+}
+
+
+/**
+ * @brief       系统软复位
+ * @param       无
+ * @retval      无
+ */
+void sys_soft_reset(void)
+{
+    SCB->AIRCR = 0X05FA0000 | (uint32_t)0x04;
 }

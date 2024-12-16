@@ -22,17 +22,14 @@ static void text_get_hz_mat(unsigned char *code, unsigned char *mat, uint8_t siz
     uint8_t csize = (size / 8 + ((size % 8) ? 1 : 0)) * (size); /* 得到字体一个字符对应点阵集所占的字节数 */
     qh = *code;
     ql = *(++code);
-
     if (qh < 0x81 || ql < 0x40 || ql == 0xff || qh == 0xff)     /* 非 常用汉字 */
     {
         for (i = 0; i < csize; i++)
         {
             *mat++ = 0x00;  /* 填充满格 */
         }
-
         return;     /* 结束访问 */
     }
-
     if (ql < 0x7f)
     {
         ql -= 0x40; /* 注意! */

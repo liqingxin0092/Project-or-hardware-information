@@ -107,13 +107,17 @@ PI7     ------> LTDC_B7
 void MX_LTDC_Init(uint16_t color);                                                                                                  // 初始化LTDC及RGB屏幕                                                                                                     // 清屏
 void LTDC_ShowChar(uint16_t x, uint16_t y, uint8_t ascii, uint8_t size, uint16_t color, uint8_t mode);                              // 显示字符
 void LTDC_ShowString(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t size, char *p, uint16_t color, uint8_t mode); // 显示字符串
-void DMA2D_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t color);   // 填充颜色 //限横屏
+void DMA2D_fill(u16 sx, u16 sy, u16 ex, u16 ey, u32 color);   // 填充颜色 //限横屏
 void LTDC_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t color);  //CPU 填充一个色块
-void DMA2D_fill_color(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height, const unsigned char *source_addr);                 // 显示图片
+void DMA2D_fill_color(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height, const unsigned short *source_addr);                 // 显示图片
 void LTDC_CLear(uint16_t color);
 void LTDC_ShowxNum(uint16_t x, uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint8_t mode, uint8_t color);
 //LTDC_turn_area_color(1005, 586, 1023, 599, YELLOW, BLUE);//是否在运行
 void LTDC_turn_area_color(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t color1 ,uint16_t color2,uint8_t *flag);
 void lcd_draw_bline(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t size, uint16_t color);
 void TOUCH_Line( uint8_t size);
+
+//显示图片用
+u32 LTDC_read_point(uint16_t x,uint16_t y);
+void LTDC_DrawPoint(u16 x, u16 y, u32 color);
 #endif

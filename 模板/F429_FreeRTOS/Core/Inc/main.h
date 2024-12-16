@@ -40,9 +40,22 @@ typedef int8_t s8;
 #define __BIT_READ(WORD_ADDR, BIT_ADDR) *(volatile uint32_t *)(0x42000000 + (((WORD_ADDR) & 0x0fffffff) << 5) + ((BIT_ADDR) << 2))
 #define __BIT(WORD_ADDR, BIT_ADDR) *(volatile uint32_t *)(0x42000000 + (((WORD_ADDR) & 0x0fffffff) << 5) + ((BIT_ADDR) << 2))
     
+#define __FPU_ENABLE() SCB->CPACR|=0xf<<20
+#define __FPU_DISABLE() SCB->CPACR&=~(0xf<<20)
+
 #define KEY0 __BIT(GPIOH_IDR_Addr, 3)
 
 void Error_Handler(void);
 
+void sys_intx_disable(void);//关中断,除了hard fault和NMI
+void sys_intx_enable(void);//开中断
 
+void sys_wfi_set(void);//WFI指令
+void sys_standby(void);//进待机中间件
+
+void pwr_enter_sleep(void);//进睡
+void pwr_enter_stop(void);//进停
+void pwr_enter_standby(void);//进待
+
+void sys_soft_reset(void);//软复位
 #endif /* __MAIN_H */

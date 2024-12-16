@@ -2,6 +2,7 @@
 #include "task.h"
 #include "list.h"
 #include "delay.h"
+#include "stdio.h"
 /*这两个文件注意起名字,头文件不区分大小写*/
 
 /* START_TASK 任务 配置
@@ -56,8 +57,8 @@ void task1(void *pvParameters)
 {
   while (1)
   {
-
-    vTaskDelay(20);
+//    printf("任务1....\r\n");
+    vTaskDelay(1000);
   }
 }
 
@@ -67,8 +68,9 @@ void task2(void *pvParameters)
 
   while (1)
   {
-
-    vTaskDelay(200);
+//    printf("任务2..........\r\n");
+    GPIOC->ODR^=1<<13;
+    vTaskDelay(500);
    }
 }
 
