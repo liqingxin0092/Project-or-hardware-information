@@ -6,7 +6,7 @@
  * 这下面要包含所用到的函数所申明的头文件(用户自己添加)
  */
 
-#define MY_FATFS_TEST 1
+#define MY_FATFS_TEST 0
 #include "delay.h"
 #include "fattester.h"
 
@@ -17,6 +17,9 @@ extern uint32_t read_addr(uint32_t addr);            //读某个地方的数
 extern void LTDC_CLear(uint16_t color);              //LTDC清屏并且改背景色
 extern void LTDC_ShowString(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t size, uint8_t *p, uint16_t color, uint8_t mode); // 显示字符串
 extern void text_show_string(uint16_t x, uint16_t y, uint16_t width, uint16_t height, char *str, uint8_t size, uint8_t mode, uint16_t color);
+extern void demo_draw_only_point(uint8_t x,uint8_t y,uint8_t size,uint16_t color);
+extern void demo_remapping(float x,float y);
+extern void HAL_Delay(uint32_t Delay);
 struct _m_usmart_nametab usmart_nametab[] =
 {
 #if USMART_USE_WRFUNS == 1      /* 如果使能了读写操作 */
@@ -54,6 +57,9 @@ struct _m_usmart_nametab usmart_nametab[] =
     (void *)LTDC_CLear,"void LTDC_CLear(uint16_t color)",
     (void *)text_show_string,"void text_show_string(uint16_t x, uint16_t y, uint16_t width, uint16_t height, char *str, uint8_t size, uint8_t mode, uint16_t color)",
     (void *)LTDC_ShowString,"void LTDC_ShowString(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t size, uint8_t *p, uint16_t color, uint8_t mode)",
+    (void *)demo_draw_only_point,"void demo_draw_only_point(uint8_t x,uint8_t y,uint8_t size,uint16_t color)",
+    (void *)demo_remapping,"void demo_remapping(int16_t x,int16_t y)",
+    (void *)HAL_Delay,"HAL_Delay(uint32_t Delay)",
 };
 
 /******************************************************************************************/

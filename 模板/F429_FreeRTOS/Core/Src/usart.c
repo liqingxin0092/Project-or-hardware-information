@@ -22,15 +22,25 @@ void MX_USART1_UART_Init(void)
   HAL_NVIC_EnableIRQ(USART1_IRQn);  
   HAL_UART_Receive_IT(&huart1, (uint8_t *)g_rx_buffer, RXBUFFERSIZE);
 
-  /*发送DMA控制*/ //USART1_TX DMA通道 DMA2,channel 4,stream7.
+  /*发送DMA控制*/ 
+  //USART1_TX DMA通道 DMA2,channel 4,stream7.
+  //内存/外设数据大小都默认是1个字节,内存,外设地址都不增,循环模式禁用.
+  //DMA是流量控制器
   USART1->CR3|=1<<7;//使能串口1的DMA模式
   __HAL_RCC_DMA2_CLK_ENABLE();//开DMA2时钟
   uint32_t temp=0;
-  temp|=4<<25; //选择通道4
-  temp|=3<<16; //优先级非常高
-  temp|=1<<6;  //从内存到外设
-  DMA2_Stream7->CR = temp;//控制寄存器赋值
+  temp|=(4<<25)|(3<<23)|(3<<16)|(1<<6); 
+  //选择通道4
+  //突发模式,一下16个
+  //优先级非常高
+  //从内存到外设
+  DMA2_Stream7->CR = temp;//赋值
   DMA2_Stream7->NDTR=1;//传输一个byte
+  temp=0;
+  temp|=(1<<2)|3;
+  //启用FIFO
+  //FIFO阈值是满
+  DMA2_Stream7->FCR=temp;//赋值
   DMA2_Stream7->PAR=0x40011004;//外设地址 UART1->DR
 }
 
@@ -66,18 +76,24 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 //int fputc(int ch, FILE *f)
 //{
 //  USART1->DR = ch;
-//  while (((USART1->SR >> 7) & 1) != 1)
-//    ;
+//  while (!(USART1->SR&0x80));
 //  return ch;
 //}
 
 //无论哪种方式都离不了while剐蹭CPU
 int fputc(int ch, FILE *f)
 {
-  DMA2_Stream7->M0AR=(uint32_t)&ch; //源地址
-  DMA2_Stream7->CR |=1;//启动DMA传输
-  while(!(DMA2->HISR&0x8000000));//等待标志位为0
-  DMA2->HIFCR|=1<<27;//清除标志位
+//  static uint8_t send_num=16;
+//  if(send_num==16)
+//  {
+      DMA2_Stream7->M0AR=(uint32_t)&ch; //源地址
+      DMA2_Stream7->CR |=1;//启动DMA传输
+      while(!(DMA2->HISR&0x8000000));//等待标志位为0
+      DMA2->HIFCR|=1<<27;//清除标志位
+//  }
+//  send_num--;
+//  if(!send_num)
+//      send_num=16;
   return ch;
 }
 void USART1_IRQHandler(void)

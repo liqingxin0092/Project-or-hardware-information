@@ -96,8 +96,8 @@ extern uint32_t FreeRTOSRunTimeTicks;
 
 #define configLIBRARY_LOWEST_INTERRUPT_PRIORITY         15                  /* 中断最低优先级 */
 #define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY    5                   /* FreeRTOS可管理的最高中断优先级 */
-#define configKERNEL_INTERRUPT_PRIORITY                 ( configLIBRARY_LOWEST_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY            ( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
+#define configKERNEL_INTERRUPT_PRIORITY                 ( configLIBRARY_LOWEST_INTERRUPT_PRIORITY << 4 )
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY            ( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << 4 )
 #define configMAX_API_CALL_INTERRUPT_PRIORITY           configMAX_SYSCALL_INTERRUPT_PRIORITY
 
 /* FreeRTOS中断服务函数相关定义 */
@@ -115,6 +115,7 @@ extern uint32_t FreeRTOSRunTimeTicks;
 //#define configTEX_S_C_B_SRAM                                   0x07UL
 //#define configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY            1
 //#define configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS             1
+//#define portUSING_MPU_WRAPPERS 1
 
 /* ARMv8-M 安全侧端口相关定义。 */
 //#define secureconfigMAX_SECURE_CONTEXTS         5

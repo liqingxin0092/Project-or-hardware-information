@@ -1,6 +1,8 @@
 #include "ltdc.h"
 #include "FONT.H"
 #include "touch.h"
+#include "text.h"
+#include "gpio.h"
 
 LTDC_HandleTypeDef hltdc; // LTDC句柄
 uint16_t background_color = WHITE; // 字符显示的背景色
@@ -72,6 +74,11 @@ void MX_LTDC_Init(uint16_t color)
   /*开DMA2D时钟*/
   __HAL_RCC_DMA2D_CLK_ENABLE();
   
+  
+  /*颜色格式*/
+  DMA2D->FGPFCCR = 2; // RGB565
+  DMA2D->OPFCCR = 2; // RGB565
+
   /*清屏*/
   LTDC_CLear(color);
 }
@@ -91,10 +98,6 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef *ltdcHandle)
 
   /*开GPIO和LTDC时钟*/
   __HAL_RCC_LTDC_CLK_ENABLE();
-  __HAL_RCC_GPIOI_CLK_ENABLE();
-  __HAL_RCC_GPIOF_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*初始化GPIO*/
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -263,32 +266,15 @@ void DMA2D_fill(u16 sx, u16 sy, u16 ex, u16 ey, u32 color)
   psy = LTDC_PHEIGHT - ex - 1;
   pey = LTDC_PHEIGHT - sx - 1;
 #endif
-
-  DMA2D->CR &= ~1; // 关DMA2D
-
-  /*设置工作模式*/
-  DMA2D->CR |= 3 << 16; // 寄存器到存储器模式
-
-  /*颜色格式*/
-  DMA2D->OPFCCR = 2; // RGB565
-
-  /*输出存储器地址*/
-  DMA2D->OMAR = (uint32_t)RGB_GRAM + 2 * (LTDC_PWIDTH * psy + psx);
-
-  /*设置窗口*/
-  DMA2D->OOR = LTDC_PWIDTH - (pex - psx + 1);
-  DMA2D->NLR = ((pex - psx + 1) << 16) | (pey - psy + 1); // 一行的像素数,有多少行
-
-  /*颜色寄存器*/
-  DMA2D->OCOLR = color;
-
-  /*启动DMA2D传输*/
-  DMA2D->CR |= DMA2D_CR_START;
-
-  /*等待传输并且清除标志*/
-  while (!(DMA2D->ISR & 2))
-    ;
-  DMA2D->IFCR |= 2; // 清标志
+    DMA2D->CR&=~1;				//先停止DMA2D
+	DMA2D->CR=3<<16;				//寄存器到存储器模式
+	DMA2D->OOR=LTDC_PWIDTH-pex+psx-1;				//设置行偏移 
+	DMA2D->OMAR=(u32)RGB_GRAM+((LTDC_PWIDTH*psy+psx)<<1);				//输出存储器地址
+	DMA2D->NLR=(pey-psy+1)|((pex-psx+1)<<16);	//设定行数寄存器
+	DMA2D->OCOLR=color;				//设定输出颜色寄存器 
+	DMA2D->CR|=1;				//启动DMA2D
+	while(!(DMA2D->ISR&2));  
+	DMA2D->IFCR|=2;				//清除传输完成标志 	
 }
 void LTDC_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t color)
 {
@@ -299,6 +285,18 @@ void LTDC_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t colo
         for(uint16_t i=0;i<ex-sx+1;i++)
         {
             __LTDC_draw_point_across(sx+i, sy+j, color);
+        }
+    }
+}
+void LTDC_CPU_fill_colors(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t* color)
+{
+    /*外层循环打印一堆行*/
+    for(uint16_t j=0;j<ey-sy+1;j++)
+    {
+        /*内层循环打一行*/
+        for(uint16_t i=0;i<ex-sx+1;i++)
+        {
+            __LTDC_draw_point_across(sx+i, sy+j, *color++);
         }
     }
 }
@@ -350,13 +348,13 @@ void LTDC_ShowxNum(uint16_t x, uint16_t y, uint32_t num, uint8_t len, uint8_t si
 /**
  * @brief 可以用来放图片
  *
- * @param sx:注意这些范围坐标要自己算,卡着那个图片的大小
+ * @param sx:
  * @param sy
  * @param ex
  * @param ey
  * @param color
  */
-void DMA2D_fill_color(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height, const unsigned short *source_addr)
+void DMA2D_fill_color(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height, uint16_t*source_addr)
 {
   uint32_t psx, psy, pex, pey;
 
@@ -402,10 +400,11 @@ void LTDC_CLear(uint16_t color)
 #elif DISPLAY_DIR == 1 // 0,横屏
   DMA2D_fill(0, 0, 599, 1023, color);
 #endif
-    
   /*更新打印字符时的背景色*/
   background_color=color;
 }
+
+
 //flag:专门用来改的
 void LTDC_turn_area_color(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t color1 ,uint16_t color2,uint8_t* flag)
 {
@@ -558,3 +557,63 @@ void LTDC_DrawPoint(u16 x, u16 y, u32 color)
 #endif
 }
 
+void ltdc_color_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t *color)
+{
+    DMA2D->CR =0;
+    DMA2D->FGOR = 0;                    /* 前景层行偏移为0 */ //这句话必须得有!!!
+    DMA2D->OOR =1024 - ex + sx - 1;     /* 设置行偏移 */
+    DMA2D->FGMAR = (uint32_t)color;     /* 源地址 */
+    DMA2D->OMAR = (uint32_t)RGB_GRAM + ((1024 * sy + sx)<<1);                 /* 输出存储器地址 */
+    DMA2D->NLR = (ey - sy + 1) | ((ex - sx + 1) << 16); /* 设定行数寄存器 */
+    DMA2D->CR=1;
+    while (!(DMA2D->ISR &2));/* 等待传输完成 */
+    DMA2D->IFCR = 2;              /* 清除传输完成标志 */
+}
+
+void draw_demo(uint8_t size)
+{
+    lcd_draw_bline(size, 299, 599, 299, size, PURPLE);//横线
+    lcd_draw_bline(580, 280, 599, 299, size, PURPLE);//>
+    lcd_draw_bline(580, 318, 599, 299, size, PURPLE);//>
+    
+    lcd_draw_bline(299, 599-size, 299, size, size, PURPLE);//竖线
+    lcd_draw_bline(284, 19, 299, size, size, PURPLE);//^
+    lcd_draw_bline(314, 19, 299, size, size, PURPLE);//^
+    
+    char p[]={0xB5,0xA5,0xCE,0xBB,0x3A,0x63,0x6D,0x28,0xC0,0xE5,0xC3,0xD7,0x29};
+    text_show_string(590, 325, 1024, 600, p, 16, 1, 0xF81F);//解决中文乱码的问题
+    text_show_string(305, 280, 1024, 600, "0", 16, 1, 0xF81F);
+    text_show_string(599, 280, 1024, 600, "40", 16, 1, 0xF81F);
+    text_show_string(310, 1, 1024, 600, "40", 16, 1, 0xF81F);
+    text_show_string(0, 282, 1024, 600, "-40", 16, 1, 0xF81F);
+    text_show_string(310, 585, 1024, 600, "-40", 16, 1, 0xF81F);
+}
+
+typedef struct 
+{
+    uint16_t x;
+    uint16_t y;
+}unit_t;
+//size 不能是1
+void demo_draw_only_point(uint16_t x,uint16_t y,uint8_t size,uint16_t color)
+{
+    static unit_t last_unit={20,20};
+    lcd_fill_circle( last_unit.x,  last_unit.y, size,background_color);//清除上一个点
+    draw_demo(2);
+    lcd_fill_circle( x,  y, size,color);
+    last_unit.x=x;
+    last_unit.y=y;
+}
+// -40<x<40 , -40<y<40
+void demo_remapping(int16_t x,int16_t y)
+{
+    if(x>=39)
+        x=39;
+    if(x<=-39)
+        x=-39;
+    if(y>=39)
+        y=39;
+    if(y<=-39)
+        y=-39;
+    demo_draw_only_point(x*7.0+299,-y*7.0+299,4,RED);
+}

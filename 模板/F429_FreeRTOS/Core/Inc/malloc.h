@@ -15,7 +15,7 @@
 
 /* mem1内存参数设定.mem1完全处于内部SRAM里面 */
 #define     MEM1_BLOCK_SIZE         64                              /* 内存块大小为32字节 */
-#define     MEM1_MAX_SIZE           160*1024                        /* 最大管理内存 100K */
+#define     MEM1_MAX_SIZE           4*1024                        /* 最大管理内存 100K */
 #define     MEM1_ALLOC_TABLE_SIZE   MEM1_MAX_SIZE/MEM1_BLOCK_SIZE   /* 内存表大小 */
 
 /* mem2内存参数设定.mem2处于CCM,用于管理CCM(特别注意,这部分SRAM,仅CPU可以访问!!) */
@@ -25,7 +25,7 @@
 
 //mem3内存参数设定.mem3的内存池处于外部SDRAM里面
 #define MEM3_BLOCK_SIZE			64  	  						//内存块大小为64字节
-#define MEM3_MAX_SIZE			28912 *1024  					//最大管理内存28912K
+#define MEM3_MAX_SIZE			100 *1024  					//最大管理内存28912K
 #define MEM3_ALLOC_TABLE_SIZE	MEM3_MAX_SIZE/MEM3_BLOCK_SIZE 	//内存表大小
 
 
@@ -52,4 +52,10 @@ uint16_t my_mem_perused(uint8_t memx);                      /* 获得内存使用率(外
 void myfree(uint8_t memx, void * ptr);                      /* 内存释放(外部调用) */
 void *mymalloc(uint8_t memx, uint32_t size);                /* 内存分配(外部调用) */
 void *myrealloc(uint8_t memx, void * ptr, uint32_t size);   /* 重新分配内存(外部调用) */
+
+/*LVGL相关*/
+void *lv_mymalloc(uint32_t size);
+void lv_myfree( void *ptr);
+void *lv_myrealloc( void *ptr, uint32_t size);
+
 #endif

@@ -1,15 +1,22 @@
 #include "malloc.h"
 
+//外部内存管理:
+//0xC000 0000 ~ 0xC000 0000+1024*600*2             // LTDC缓冲区.
+//0xC000 0000+1024*600*2 ~ 0xC000 0000+1024*600*4  // LVGL图形缓冲区1.
+//0xC000 0000+1024*600*4 ~ 0xC000 0000+1024*600*6  // LVGL图形缓冲区2.
+//0xC000 0000+1024*600*6 ~ 0xC000 0000+1024*600*n  // 内存管理
+
+//注意算上内存表的大小.
 
 /* 内存池(32字节对齐) */
 __align(32) uint8_t  mem1base[MEM1_MAX_SIZE];                                                   /* 内部SRAM内存池 */
 __align(32) uint8_t  mem2base[MEM2_MAX_SIZE] __attribute__((at(0x10000000)));                   /* 内部CCM内存池 */
-__align(32) u8 mem3base[MEM3_MAX_SIZE] __attribute__((at(0XC01F4000)));					//外部SDRAM内存池,前面2M给LTDC用了(1280*800*2)
+__align(32) u8 mem3base[MEM3_MAX_SIZE] __attribute__((at(0xC0000000+1024*600*6)));					//外部SDRAM内存池,前面2M给LTDC用了(1280*800*2)
 
 /* 内存管理表 */
-uint16_t  mem1mapbase[MEM1_ALLOC_TABLE_SIZE];                                                   /* 内部SRAM内存池MAP */
+uint16_t  mem1mapbase[MEM1_ALLOC_TABLE_SIZE];                                                  /* 内部SRAM内存池MAP */
 uint16_t  mem2mapbase[MEM2_ALLOC_TABLE_SIZE] __attribute__((at(0x10000000 + MEM2_MAX_SIZE)));   /* 内部CCM内存池MAP */
-uint16_t mem3mapbase[MEM3_ALLOC_TABLE_SIZE] __attribute__((at(0XC01F4000+MEM3_MAX_SIZE)));	//外部SRAM内存池MAP
+uint16_t mem3mapbase[MEM3_ALLOC_TABLE_SIZE] __attribute__((at(0xC0000000+1024*600*6+MEM3_MAX_SIZE)));	//外部SRAM内存池MAP
 
 /* 内存管理参数 */
 const uint32_t  memtblsize[SRAMBANK] = {MEM1_ALLOC_TABLE_SIZE, MEM2_ALLOC_TABLE_SIZE, MEM3_ALLOC_TABLE_SIZE};   /* 内存表大小 */
@@ -232,3 +239,19 @@ void *myrealloc(uint8_t  memx, void *ptr, uint32_t size)
         return (void*)((uint32_t )mallco_dev.membase[memx] + offset);               /* 返回新内存首地址 */
     }
 }
+
+void *lv_mymalloc(uint32_t size)
+{
+   return mymalloc( SRAMCCM,  size);
+}
+
+void lv_myfree( void *ptr)
+{
+    myfree( SRAMCCM, ptr);
+}
+
+void *lv_myrealloc( void *ptr, uint32_t size)
+{
+    return myrealloc(SRAMCCM, ptr,  size);
+}
+

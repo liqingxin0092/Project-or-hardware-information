@@ -47,7 +47,7 @@ uint8_t exfuns_init(void)
         if (!fs[i])break;
     }
     
-#if USE_FATTESTER == 1  /* 如果使能了文件系统测试 */
+#if USE_FATTESTER == 0  /* 如果使能了文件系统测试 */
     res = mf_init();    /* 初始化文件系统测试(申请内存) */
 #endif
     

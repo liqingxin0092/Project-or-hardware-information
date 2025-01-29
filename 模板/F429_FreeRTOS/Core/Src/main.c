@@ -12,11 +12,15 @@
 #include "text.h"
 #include "malloc.h"
 #include "stmflash.h"
+#include "btim.h"
+#include "lvgl.h"
+#include "lv_port_disp_template.h"
+#include "lv_port_indev_template.h"
+#include "EventRecorder.h"
 
+extern const unsigned char gImage_2[9800] ;
 void SystemClock_Config(void);
 
-u8 write_buffer[12]={0,1,2,3,4,5,6,7,8,9,10,11};
-u8 read_buffer[12];
 int main(void)
 {
   HAL_Init();                       // HAL库初始化
@@ -26,18 +30,20 @@ int main(void)
   delay_init(180);                  // 初始化延时
   usmart_dev.init(90);              // 初始化USMART,这里是定时器频率
   MX_FMC_Init();                    // SDRAM和NAND FLASH初始化
-  SDRAM_Init(&__SDRAM_handle, 250); // 初始化SDRAM
+  SDRAM_Init(&__SDRAM_handle, 2000); // 初始化SDRAM
+  my_mem_init(SRAMIN);            //内存池初始化
+  my_mem_init(SRAMCCM);           //内部CCM初始化
   MX_LTDC_Init(0);                  // 初始化LTDC
   Touch_init();                     // 初始化触摸IC
   W25QXX_Init();                    // spi flash初始化
   exfuns_init();                    // 为fatfs相关变量申请内存
   f_mount(fs[0], "0:", 1);          // 挂载SD卡
   f_mount(fs[1], "1:", 1);          // 挂载NAND FLASH
-  my_mem_init(SRAMIN);		//初始化内部内存池
-  my_mem_init(SRAMCCM);		//初始化CCM内存池 
   fonts_init();                     // 字库初始化
-//    
-//  stmflash_read(ADDR_FLASH_SECTOR_11,(u32*)read_buffer,3);
+
+  EventRecorderInitialize(EventRecordAll, 1U);//调试初始化
+  EventRecorderStart();
+
   freertos_start();                 // FreeRTOS开始调度
 }
 
@@ -204,3 +210,8 @@ void sys_soft_reset(void)
 {
     SCB->AIRCR = 0X05FA0000 | (uint32_t)0x04;
 }
+
+/*调试函数*/
+//uint32_t EventRecord2(uint32_t id,uint32_t val1,uint32_t val2 );
+//uint32_t EventRecord4(uint32_t id,uint32_t val1,uint32_t val2,uint32_t val3,uint32_t val4);
+//uint32_t EventRecordData(uint32_t id,const void *data,uint32_t len);

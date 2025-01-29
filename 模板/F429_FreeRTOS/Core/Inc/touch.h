@@ -51,6 +51,9 @@ extern _m_tp_dev tp_dev;        /* 触屏控制器在touch.c里面定义 */
 #define SDA_OUT __BIT(GPIOI_ODR_Addr,3) //输出用
 #define SDA_IN __BIT(GPIOI_IDR_Addr,3)//输入用
 
+extern uint8_t touch_num;
+extern uint8_t touch_flag;
+
 void Touch_init(void);
 uint8_t gt9xxx_scan(uint8_t mode);
 

@@ -24,13 +24,14 @@ PD6   ------> RB
 //*(volatile uint8_t*) 0x80000000|(1<<16) = command;
 //*(volatile uint8_t*) 0x80000000|(1<<17) = address;
 
+/*NAND*/
 NAND_HandleTypeDef hnand1;
-
 /*SDRAM*/
 SDRAM_HandleTypeDef hsdram1;
+
 void MX_FMC_Init(void)
 {
-      /*NAND FLASH初始化*/
+  /*NAND FLASH初始化*/
   FMC_NAND_PCC_TimingTypeDef ComSpaceTiming = {0};
   FMC_NAND_PCC_TimingTypeDef AttSpaceTiming = {0};
   hnand1.Instance = FMC_NAND_DEVICE;
@@ -81,13 +82,13 @@ void MX_FMC_Init(void)
   hsdram1.Init.ReadBurst = FMC_SDRAM_RBURST_ENABLE;
   hsdram1.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_0;
   /* SdramTiming */
-  SdramTiming.LoadToActiveDelay = 2;
-  SdramTiming.ExitSelfRefreshDelay = 8;
-  SdramTiming.SelfRefreshTime = 6;
-  SdramTiming.RowCycleDelay = 6;
-  SdramTiming.WriteRecoveryTime = 2;
-  SdramTiming.RPDelay = 2;
-  SdramTiming.RCDDelay = 2;
+  SdramTiming.LoadToActiveDelay = 2;//2
+  SdramTiming.ExitSelfRefreshDelay = 4;//8
+  SdramTiming.SelfRefreshTime = 4;//6
+  SdramTiming.RowCycleDelay = 4;//6
+  SdramTiming.WriteRecoveryTime = 2;//2
+  SdramTiming.RPDelay = 2;//2
+  SdramTiming.RCDDelay = 2;//2
 
   HAL_SDRAM_Init(&hsdram1, &SdramTiming);
   
