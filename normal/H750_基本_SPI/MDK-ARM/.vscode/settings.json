@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"lcd_spi_154.h": "c",
+		"lcd.h": "c",
+		"soft_timer.h": "c"
+	}
+}
