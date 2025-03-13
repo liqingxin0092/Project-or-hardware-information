@@ -55,7 +55,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
+          <BrowseInformation>0</BrowseInformation>
           <ListingPath>..\Output\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -139,7 +139,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -190,12 +190,12 @@
             <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
-            <StupSel>16</StupSel>
+            <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
-            <RoSelD>4</RoSelD>
+            <RoSelD>3</RoSelD>
             <RwSelD>4</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
@@ -207,8 +207,8 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
-            <Ir2Chk>1</Ir2Chk>
+            <Ir1Chk>1</Ir1Chk>
+            <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
@@ -262,8 +262,8 @@
               </XRAM>
               <OCR_RVCT1>
                 <Type>1</Type>
-                <StartAddress>0x90000000</StartAddress>
-                <Size>0xa0000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </OCR_RVCT1>
               <OCR_RVCT2>
                 <Type>1</Type>
@@ -277,13 +277,13 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x8000000</StartAddress>
+                <Size>0x20000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
-                <StartAddress>0x8000000</StartAddress>
-                <Size>0x20000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
@@ -338,10 +338,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-typedef-redefinition -Wno-invalid-source-encoding -Wno-return-type</MiscControls>
+              <MiscControls>-Wno-invalid-source-encoding -Wno-return-type -Wno-typedef-redefinition</MiscControls>
               <Define>USE_HAL_DRIVER,STM32H750xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include;..\Peripheral\SDMMC;..\User;..\Sys\Delay;..\Sys\USMART;..\Sys\Uart;..\FreeRTOS\portable\RVDS\ARM_CM7;..\FreeRTOS\include;..\Peripheral\sd card;..\Peripheral\W25Q64;..\Peripheral\MPU;..\Midware\FATFS\exfuns;..\Midware\FATFS\source;..\Peripheral\LCD;..\Sys\MALLOC;..\Sys\sys;..\Peripheral\SDMMC;..\Midware\PICTURE;..\Midware\soft_timer;..\FreeRTOS\portable\GCC\ARM_CM7</IncludePath>
+              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include;..\Main;..\External Minimodule\USMART;..\Mine\inc;..\External Minimodule\PICTURE;..\External Minimodule\LCD;..\External Minimodule\sys;..\Third Party\FreeRTOS\include;..\Third Party\FreeRTOS\portable\GCC\ARM_CM7;..\External Minimodule\Uart;..\External Minimodule\TIM;..\Third Party\FATFS\source;..\Third Party\FATFS\exfuns;..\External Minimodule\SDMMC;..\External Minimodule\W25Q64;..\External Minimodule\modbus;..\External Minimodule\malloc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -363,7 +363,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -372,7 +372,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\Output\project.sct</ScatterFile>
+            <ScatterFile>.\mine.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -393,42 +393,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>User</GroupName>
+          <GroupName>Main</GroupName>
           <Files>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Main\FreeRTOSConfig.h</FilePath>
+            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\stm32h7xx_it.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7xx_it.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\User\stm32h7xx_it.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_stm32h7xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\system_stm32h7xx.c</FilePath>
-            </File>
-            <File>
-              <FileName>btim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\btim.c</FilePath>
+              <FilePath>..\Main\main.c</FilePath>
             </File>
             <File>
               <FileName>my_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\my_freertos.c</FilePath>
+              <FilePath>..\Main\my_freertos.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7xx_hal_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\User\stm32h7xx_hal_conf.h</FilePath>
+              <FilePath>..\Main\stm32h7xx_hal_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Main\stm32h7xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32h7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Main\system_stm32h7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -439,11 +434,6 @@
               <FileName>stm32h7xx_hal.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7xx_hal_cortex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cortex.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7xx_hal_dma.c</FileName>
@@ -471,24 +461,9 @@
               <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_flash_ex.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7xx_hal_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32h7xx_hal_hsem.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hsem.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7xx_hal_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7xx_hal_i2c_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2c_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7xx_hal_mdma.c</FileName>
@@ -561,74 +536,44 @@
               <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_sdmmc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7xx_hal_spi.c</FileName>
+              <FileName>stm32h7xx_hal_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi.c</FilePath>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7xx_hal_spi_ex.c</FileName>
+              <FileName>stm32h7xx_hal_ramecc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi_ex.c</FilePath>
+              <FilePath>..\Driver\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_ramecc.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Peripheral</GroupName>
+          <GroupName>Sys</GroupName>
           <Files>
-            <File>
-              <FileName>qspi_w25q64.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Peripheral\W25Q64\qspi_w25q64.c</FilePath>
-            </File>
-            <File>
-              <FileName>mpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Peripheral\MPU\mpu.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>SYS</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Sys\Delay\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Sys\Delay\delay.h</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Sys\Uart\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Sys\Uart\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>sys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Sys\sys\sys.c</FilePath>
-            </File>
-            <File>
-              <FileName>malloc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Sys\MALLOC\malloc.c</FilePath>
-            </File>
             <File>
               <FileName>HardFaultHandler.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\Sys\HardFaultHandlerMDK\HardFaultHandler.S</FilePath>
+              <FilePath>..\External Minimodule\HardFaultHandlerMDK\HardFaultHandler.S</FilePath>
             </File>
             <File>
               <FileName>SEGGER_HardFaultHandler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Sys\HardFaultHandlerMDK\SEGGER_HardFaultHandler.c</FilePath>
+              <FilePath>..\External Minimodule\HardFaultHandlerMDK\SEGGER_HardFaultHandler.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\sys\sys.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\Uart\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\malloc\rtx_memory.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -638,22 +583,22 @@
             <File>
               <FileName>usmart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Sys\USMART\usmart.c</FilePath>
+              <FilePath>..\External Minimodule\USMART\usmart.c</FilePath>
             </File>
             <File>
               <FileName>usmart_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Sys\USMART\usmart_config.c</FilePath>
+              <FilePath>..\External Minimodule\USMART\usmart_config.c</FilePath>
             </File>
             <File>
               <FileName>usmart_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Sys\USMART\usmart_port.c</FilePath>
+              <FilePath>..\External Minimodule\USMART\usmart_port.c</FilePath>
             </File>
             <File>
               <FileName>usmart_str.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Sys\USMART\usmart_str.c</FilePath>
+              <FilePath>..\External Minimodule\USMART\usmart_str.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -663,37 +608,37 @@
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\croutine.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\event_groups.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\list.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\queue.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\stream_buffer.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\tasks.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\timers.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\timers.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -703,319 +648,184 @@
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\portable\MemMang\heap_4.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\portable\MemMang\heap_4.c</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\portable\GCC\ARM_CM7\port.c</FilePath>
+              <FilePath>..\Third Party\FreeRTOS\portable\GCC\ARM_CM7\port.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Fatfs</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>1</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>2</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-              <ComprImg>1</ComprImg>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <uSurpInc>2</uSurpInc>
-                <uC99>2</uC99>
-                <uGnu>2</uGnu>
-                <useXO>2</useXO>
-                <v6Lang>0</v6Lang>
-                <v6LangP>0</v6LangP>
-                <vShortEn>2</vShortEn>
-                <vShortWch>2</vShortWch>
-                <v6Lto>2</v6Lto>
-                <v6WtE>2</v6WtE>
-                <v6Rtti>2</v6Rtti>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <uSurpInc>2</uSurpInc>
-                <useXO>2</useXO>
-                <ClangAsOpt>0</ClangAsOpt>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
           <Files>
             <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\FATFS\source\diskio.c</FilePath>
+              <FilePath>..\Third Party\FATFS\source\diskio.c</FilePath>
             </File>
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\FATFS\source\ff.c</FilePath>
+              <FilePath>..\Third Party\FATFS\source\ff.c</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\FATFS\source\ffsystem.c</FilePath>
+              <FilePath>..\Third Party\FATFS\source\ffsystem.c</FilePath>
             </File>
             <File>
-              <FileName>ffconf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Midware\FATFS\source\ffconf.h</FilePath>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third Party\FATFS\source\ffunicode.c</FilePath>
             </File>
             <File>
               <FileName>exfuns.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\FATFS\exfuns\exfuns.c</FilePath>
+              <FilePath>..\Third Party\FATFS\exfuns\exfuns.c</FilePath>
             </File>
             <File>
               <FileName>fattester.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\FATFS\exfuns\fattester.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>EX_FLASH_CODE</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>1</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>2</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-              <ComprImg>1</ComprImg>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <uSurpInc>2</uSurpInc>
-                <uC99>2</uC99>
-                <uGnu>2</uGnu>
-                <useXO>2</useXO>
-                <v6Lang>0</v6Lang>
-                <v6LangP>0</v6LangP>
-                <vShortEn>2</vShortEn>
-                <vShortWch>2</vShortWch>
-                <v6Lto>2</v6Lto>
-                <v6WtE>2</v6WtE>
-                <v6Rtti>2</v6Rtti>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <uSurpInc>2</uSurpInc>
-                <useXO>2</useXO>
-                <ClangAsOpt>0</ClangAsOpt>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
-          <Files>
-            <File>
-              <FileName>lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Peripheral\LCD\lcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Peripheral\LCD\lcd_fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_sdcard.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Peripheral\SDMMC\sdmmc_sdcard.c</FilePath>
+              <FilePath>..\Third Party\FATFS\exfuns\fattester.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>PICTURE</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>1</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>2</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-              <ComprImg>1</ComprImg>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <uSurpInc>2</uSurpInc>
-                <uC99>2</uC99>
-                <uGnu>2</uGnu>
-                <useXO>2</useXO>
-                <v6Lang>0</v6Lang>
-                <v6LangP>0</v6LangP>
-                <vShortEn>2</vShortEn>
-                <vShortWch>2</vShortWch>
-                <v6Lto>2</v6Lto>
-                <v6WtE>2</v6WtE>
-                <v6Rtti>2</v6Rtti>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <uSurpInc>2</uSurpInc>
-                <useXO>2</useXO>
-                <ClangAsOpt>0</ClangAsOpt>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
           <Files>
             <File>
               <FileName>bmp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\PICTURE\bmp.c</FilePath>
+              <FilePath>..\External Minimodule\PICTURE\bmp.c</FilePath>
             </File>
             <File>
               <FileName>gif.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\PICTURE\gif.c</FilePath>
+              <FilePath>..\External Minimodule\PICTURE\gif.c</FilePath>
             </File>
             <File>
               <FileName>piclib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\PICTURE\piclib.c</FilePath>
+              <FilePath>..\External Minimodule\PICTURE\piclib.c</FilePath>
             </File>
             <File>
               <FileName>tjpgd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\PICTURE\tjpgd.c</FilePath>
+              <FilePath>..\External Minimodule\PICTURE\tjpgd.c</FilePath>
             </File>
             <File>
               <FileName>weixin.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bmp_picture\weixin.c</FilePath>
+              <FilePath>..\Mix\bmp_picture\weixin.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>soft_timer</GroupName>
+          <GroupName>peripheral</GroupName>
           <Files>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\LCD\lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\LCD\lcd_fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\SDMMC\sdmmc_sdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>btim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\TIM\btim.c</FilePath>
+            </File>
+            <File>
+              <FileName>qspi_w25q64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\External Minimodule\W25Q64\qspi_w25q64.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mine</GroupName>
+          <Files>
+            <File>
+              <FileName>asm_function.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\Mine\src\asm_function.s</FilePath>
+            </File>
+            <File>
+              <FileName>bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\bsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>buffer_key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\buffer_key.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecc_detection.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\ecc_detection.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>h7_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\h7_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>modbus_m.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\modbus_m.c</FilePath>
+            </File>
             <File>
               <FileName>soft_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Midware\soft_timer\soft_timer.c</FilePath>
+              <FilePath>..\Mine\src\soft_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\test.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart_m.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\usart_m.c</FilePath>
+            </File>
+            <File>
+              <FileName>rcc_m.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\rcc_m.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_m.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mine\src\flash_m.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>::Compiler</GroupName>
+          <GroupName>readme</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\readme.txt</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
@@ -1023,22 +833,13 @@
 
   <RTE>
     <apis/>
-    <components>
-      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
-        <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
-        <targetInfos>
-          <targetInfo name="base_project"/>
-        </targetInfos>
-      </component>
-    </components>
+    <components/>
     <files>
       <file attr="config" category="header" name="Config\EventRecorderConf.h" version="1.1.0">
-        <instance index="0">RTE\Compiler\EventRecorderConf.h</instance>
+        <instance index="0" removed="1">RTE\Compiler\EventRecorderConf.h</instance>
         <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device"/>
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
-        <targetInfos>
-          <targetInfo name="base_project"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
     </files>
   </RTE>

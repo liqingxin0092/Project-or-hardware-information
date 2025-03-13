@@ -272,14 +272,6 @@ HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)
   {
     return HAL_ERROR;
   }
-
-  /* Check the parameters */
-  assert_param(IS_TIM_INSTANCE(htim->Instance));
-  assert_param(IS_TIM_COUNTER_MODE(htim->Init.CounterMode));
-  assert_param(IS_TIM_CLOCKDIVISION_DIV(htim->Init.ClockDivision));
-  assert_param(IS_TIM_PERIOD(htim, htim->Init.Period));
-  assert_param(IS_TIM_AUTORELOAD_PRELOAD(htim->Init.AutoReloadPreload));
-
   if (htim->State == HAL_TIM_STATE_RESET)
   {
     /* Allocate lock resource and initialize it */

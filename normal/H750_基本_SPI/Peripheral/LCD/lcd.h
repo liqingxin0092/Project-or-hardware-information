@@ -77,11 +77,12 @@ typedef struct // LCD相关参数结构体
 }lcd_t; 
 
 extern lcd_t LCD;
-#define LCD_DC_Command() lcd_io.rs_io.GPIOx->BSRR = 0x80000000 // 低电平，指令传输
-#define LCD_DC_Data() lcd_io.rs_io.GPIOx->BSRR = 0x8000       // 高电平,数据传输
 
-#define LCD_BLK_ON() lcd_io.blk_io.GPIOx->BSRR = 0x8000     // 高电平,开启背光
-#define LCD_BLK_OFF() lcd_io.blk_io.GPIOx->BSRR = 0x80000000 // 低电平,关闭背光
+#define LCD_DC_Command() GPIOE->ODR&=~(1<<15) // 低电平，指令传输
+#define LCD_DC_Data() GPIOE->ODR|=1<<15
+
+#define LCD_BLK_ON() GPIOD->ODR|=1<<15     // 高电平,开启背光
+#define LCD_BLK_OFF() GPIOD->ODR&=~(1<<15)   // 低电平,关闭背光
 
 void LCD_Init(void);
 void LCD_FillRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);

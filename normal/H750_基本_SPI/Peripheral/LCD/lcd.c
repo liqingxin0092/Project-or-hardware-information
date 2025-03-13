@@ -115,9 +115,9 @@ void lcd_spi_init(void)
     
     while((ACTIVE_SPI->CFG2!=(vu32)cfg2_temp)||(ACTIVE_SPI->CFG1!=(vu32)cfg1_temp))
     {                   //优化等级高,某些寄存器位可能设置不上.
-        RCC->APB2RSTR|=1<<13;		//复位SPI4
-        delay_us(2);
-        RCC->APB2RSTR&=~(1<<13);	//停止复位SPI4
+//        RCC->APB2RSTR|=1<<13;		//复位SPI4
+//        delay_us(2);
+//        RCC->APB2RSTR&=~(1<<13);	//停止复位SPI4
         ACTIVE_SPI->CFG1 = cfg1_temp;
         ACTIVE_SPI->CFG2 = cfg2_temp;
     }

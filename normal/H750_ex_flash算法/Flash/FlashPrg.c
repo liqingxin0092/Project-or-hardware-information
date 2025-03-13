@@ -49,6 +49,7 @@ int UnInit (unsigned long fnc)
 	{
 		return 1;
 	}
+    QSPI_W25Qxx_MemoryMappedMode();
 	return 0;
 }
 

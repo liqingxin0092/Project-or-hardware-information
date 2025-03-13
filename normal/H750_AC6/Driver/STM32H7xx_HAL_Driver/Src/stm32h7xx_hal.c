@@ -137,7 +137,7 @@ HAL_StatusTypeDef HAL_Init(void)
 uint32_t common_system_clock;
     
   /* Set Interrupt Group Priority */
-  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);//中断分组
+//  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);//中断分组
 
   /* Update the SystemCoreClock global variable */
 #if defined(RCC_D1CFGR_D1CPRE)
@@ -249,34 +249,34 @@ __weak void HAL_MspDeInit(void)
   * @param TickPriority: Tick interrupt priority.
   * @retval HAL status
   */
-__weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
-{
-  /* Check uwTickFreq for MisraC 2012 (even if uwTickFreq is a enum type that don't take the value zero)*/
-  if((uint32_t)uwTickFreq == 0UL)
-  {
-    return HAL_ERROR;
-  }
+//__weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
+//{
+//  /* Check uwTickFreq for MisraC 2012 (even if uwTickFreq is a enum type that don't take the value zero)*/
+//  if((uint32_t)uwTickFreq == 0UL)
+//  {
+//    return HAL_ERROR;
+//  }
 
-    /* Configure the SysTick to have interrupt in 1ms time basis*/
-    if (HAL_SYSTICK_Config(SystemCoreClock / (1000UL / (uint32_t)uwTickFreq)) > 0U)
-    {
-      return HAL_ERROR;
-    }
+//    /* Configure the SysTick to have interrupt in 1ms time basis*/
+//    if (HAL_SYSTICK_Config(SystemCoreClock / (1000UL / (uint32_t)uwTickFreq)) > 0U)
+//    {
+//      return HAL_ERROR;
+//    }
 
-  /* Configure the SysTick IRQ priority */
-  if (TickPriority < (1UL << __NVIC_PRIO_BITS))
-  {
-    HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
-    uwTickPrio = TickPriority;
-  }
-  else
-  {
-    return HAL_ERROR;
-  }
+//  /* Configure the SysTick IRQ priority */
+//  if (TickPriority < (1UL << __NVIC_PRIO_BITS))
+//  {
+//    HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
+//    uwTickPrio = TickPriority;
+//  }
+//  else
+//  {
+//    return HAL_ERROR;
+//  }
 
-  /* Return function status */
-  return HAL_OK;
-}
+//  /* Return function status */
+//  return HAL_OK;
+//}
 
 /**
   * @}
@@ -343,33 +343,33 @@ uint32_t HAL_GetTickPrio(void)
   * @brief Set new tick Freq.
   * @retval Status
   */
-HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
-{
-  HAL_StatusTypeDef status  = HAL_OK;
-  HAL_TickFreqTypeDef prevTickFreq;
+//HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
+//{
+//  HAL_StatusTypeDef status  = HAL_OK;
+//  HAL_TickFreqTypeDef prevTickFreq;
 
-  assert_param(IS_TICKFREQ(Freq));
+//  assert_param(IS_TICKFREQ(Freq));
 
-  if (uwTickFreq != Freq)
-  {
+//  if (uwTickFreq != Freq)
+//  {
 
-    /* Back up uwTickFreq frequency */
-    prevTickFreq = uwTickFreq;
+//    /* Back up uwTickFreq frequency */
+//    prevTickFreq = uwTickFreq;
 
-    /* Update uwTickFreq global variable used by HAL_InitTick() */
-    uwTickFreq = Freq;
+//    /* Update uwTickFreq global variable used by HAL_InitTick() */
+//    uwTickFreq = Freq;
 
-    /* Apply the new tick Freq  */
-    status = HAL_InitTick(uwTickPrio);
-    if (status != HAL_OK)
-    {
-      /* Restore previous tick frequency */
-      uwTickFreq = prevTickFreq;
-    }
-  }
+//    /* Apply the new tick Freq  */
+//    status = HAL_InitTick(uwTickPrio);
+//    if (status != HAL_OK)
+//    {
+//      /* Restore previous tick frequency */
+//      uwTickFreq = prevTickFreq;
+//    }
+//  }
 
-  return status;
-}
+//  return status;
+//}
 
 /**
   * @brief Return tick frequency.

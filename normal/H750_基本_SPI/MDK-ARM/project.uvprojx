@@ -888,11 +888,6 @@
           </GroupOption>
           <Files>
             <File>
-              <FileName>lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Peripheral\LCD\lcd.c</FilePath>
-            </File>
-            <File>
               <FileName>lcd_fonts.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Peripheral\LCD\lcd_fonts.c</FilePath>
@@ -901,6 +896,11 @@
               <FileName>sdmmc_sdcard.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Peripheral\SDMMC\sdmmc_sdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Peripheral\LCD\lcd.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -231,10 +231,10 @@ HAL_StatusTypeDef HAL_RCC_DeInit(void)
   SystemD2Clock = HSI_VALUE;
 
   /* Adapt Systick interrupt period */
-  if (HAL_InitTick(uwTickPrio) != HAL_OK)
-  {
-    return HAL_ERROR;
-  }
+//  if (HAL_InitTick(uwTickPrio) != HAL_OK)
+//  {
+//    return HAL_ERROR;
+//  }
 
   /* Get Start Tick */
   tickstart = HAL_GetTick();
@@ -1234,7 +1234,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
 #endif /* DUAL_CORE && CORE_CM4 */
 
   /* Configure the source of time base considering new system clocks settings*/
-  halstatus = HAL_InitTick(uwTickPrio);
+//  halstatus = HAL_InitTick(uwTickPrio);
 
   return halstatus;
 }

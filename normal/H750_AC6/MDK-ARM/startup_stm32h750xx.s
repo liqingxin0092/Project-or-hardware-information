@@ -29,7 +29,7 @@
 ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-Stack_Size		EQU     0x400
+Stack_Size		EQU     0x0B000
 
                 AREA    STACK, NOINIT, READWRITE, ALIGN=3
 Stack_Mem       SPACE   Stack_Size
@@ -40,7 +40,7 @@ __initial_sp
 ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-Heap_Size      EQU     0x200
+Heap_Size      EQU     0x000
 
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base
@@ -238,17 +238,10 @@ Reset_Handler    PROC
                  EXPORT  Reset_Handler                    [WEAK]
         IMPORT  SystemInit
         IMPORT  __main
-                 
+                
                 ;/*复位操作*/
                  LDR     R0, =SystemInit
                  BLX     R0
-                 
-                ;/*使能FPU*/
-                 LDR     R0, =0xE000ED88 ;使能FPU
-                 MOV     R1, #0xF00000  
-                 STR     R1, [R0]    
-                 DSB
-                 ISB   
                  
                 ;/*进main*/
                  LDR     R0, =__main
