@@ -58,6 +58,6 @@ void gpio_init_pin(gpio_t* GPIOx,uint8_t pin,uint8_t mode,uint8_t out_type,uint8
 void gpio_lock_pin(gpio_t* GPIOx,uint16_t pin_group);
 
 /*”¶”√≤„*/
-void RCC_GPIO_Init(void);
+void RCC_GPIO_Init(uint8_t use_io_comp);
 
 #endif

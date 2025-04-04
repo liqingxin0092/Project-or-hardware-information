@@ -1,6 +1,6 @@
 #ifndef __BMP_H__
 #define __BMP_H__
-#include "sys.h"
+#include "bsp.h" 
 
 //////////////////////////////////////////用户配置区///////////////////////////////
 #define BMP_USE_MALLOC		0 		//定义是否使用malloc,这里我们选择使用malloc
@@ -38,10 +38,10 @@ typedef struct __attribute((packed))
 //彩色表 
 typedef struct __attribute__((packed))
 {
-    u8 rgbBlue ;    //指定蓝色强度
-    u8 rgbGreen ;	//指定绿色强度 
-    u8 rgbRed ;	  	//指定红色强度 
-    u8 rgbReserved ;//保留，设置为0 
+    uint8_t rgbBlue ;    //指定蓝色强度
+    uint8_t rgbGreen ;	//指定绿色强度 
+    uint8_t rgbRed ;	  	//指定红色强度 
+    uint8_t rgbReserved ;//保留，设置为0 
 }RGBQUAD ;
 //位图信息头
 typedef struct __attribute__((packed))

@@ -16,21 +16,13 @@
 #define KEY_LONG_TIME 100  //1000ms
 
 /*缓冲区大小*/
-#define KEY_BUFFER_NUM 10
+#define KEY_BUFFER_SIZE 10
 
 /*是否支持长摁连发*/
 #define USE_CONTINUOUS_TRANSMISSION 0
 
 /*长摁连发时间 * 10ms */
 #define KEY_REPEAT_TIME 10
-
-/*缓冲区结构*/
-typedef struct
-{
-    uint8_t write_ptr;
-    uint8_t read_ptr;
-    uint8_t buffer[KEY_BUFFER_NUM+1];
-}key_buffer_t;
 
 /*按键信息*/
 typedef struct

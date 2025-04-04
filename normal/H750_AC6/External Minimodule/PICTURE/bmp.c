@@ -1,5 +1,5 @@
 #include "piclib.h"
-#include "bmp.h"
+#include "sys.h"
 #include "string.h"
 #include "lcd.h"
 

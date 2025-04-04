@@ -1,5 +1,5 @@
 #include "lcd.h"
-#include "soft_timer.h"
+#include "timer_m.h"
 #include "lcd_fonts.h"
 #include "stdio.h"
 #include "gpio.h"

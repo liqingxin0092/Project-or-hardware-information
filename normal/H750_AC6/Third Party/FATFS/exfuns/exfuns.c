@@ -1,5 +1,4 @@
 #include "string.h"
-#include "usart.h"
 #include "exfuns.h"
 #include "fattester.h"
 #include "ff.h"

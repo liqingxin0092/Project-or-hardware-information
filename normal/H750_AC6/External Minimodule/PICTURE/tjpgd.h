@@ -25,7 +25,7 @@ extern "C" {
 #endif
 
 #include "integer.h"
-#include "sys.h"
+#include "bsp.h" 
 
 	
 	
@@ -81,7 +81,7 @@ struct JDEC {
 /* TJpgDec API functions */
 JRESULT jd_prepare (JDEC*, UINT(*)(JDEC*,BYTE*,UINT), void*, UINT, void*);
 JRESULT jd_decomp (JDEC*, UINT(*)(JDEC*,void*,JRECT*), BYTE);
-u8 jpg_decode(const u8 *filename,u8 fast);
+uint8_t jpg_decode(const uint8_t *filename,uint8_t fast);
 
 #ifdef __cplusplus
 }

@@ -1,10 +1,14 @@
 #include "usmart.h"
 #include "usmart_port.h"
-#include "usart.h"
+#include "usart_m.h"
 #include "stdio.h"
 #include "h7_core.h"
 
+uint8_t usmart_rcv_pack;
 static TIM_HandleTypeDef g_timx_usmart_handle;      /* 定时器句柄 */
+
+#define BUFFER_MAX 100
+uint8_t usamart_buffer[BUFFER_MAX];
 
 /**
  * @brief       获取输入数据流(字符串)
@@ -16,17 +20,22 @@ static TIM_HandleTypeDef g_timx_usmart_handle;      /* 定时器句柄 */
  */
 char *usmart_get_input_string(void)
 {
-    uint8_t len;
     char *pbuf = 0;
-    if (g_usart_rx_sta & 0x8000)        /* 串口接收完成？ */
+    uint32_t i;
+    if(usmart_rcv_pack==1)//接收到了结束符'\n'
     {
-        
-        len = g_usart_rx_sta & 0x3fff;  /* 得到此次接收到的数据长度 */
-        g_usart_rx_buf[len] = '\0';     /* 在末尾加入结束符. */
-        pbuf = (char*)g_usart_rx_buf;
-        g_usart_rx_sta = 0;             /* 开启下一次接收 */
+        for(i=0;i<BUFFER_MAX;i++)
+        {
+            usart_receive_char(&USART_APP, usamart_buffer+i);
+            if(usamart_buffer[i]=='\r')
+            {
+               usamart_buffer[i]='\0'; 
+               return (char*)usamart_buffer;
+            }
+        } 
     }
-    return pbuf;
+    else
+        return 0;  //没收到返回0
 }
 
 /* 如果使能了定时器扫描, 则需要定义如下函数 */

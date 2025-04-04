@@ -2,7 +2,7 @@
 #include "lcd.h"
 #include "stdio.h"
 #include "string.h"
-#include "soft_timer.h"
+#include "timer_m.h"
 
 extern u32 *ltdc_framebuf[2];	//LTDC LCD帧缓存数组指针,必须指向对应大小的内存区域
 	

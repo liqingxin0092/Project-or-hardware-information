@@ -196,10 +196,12 @@ uint8_t usmart_sys_cmd_exe(char *str)
  * @param       tclk: 定时器的工作频率(单位:Mhz)
  * @retval      无
  */
-void usmart_init(uint16_t tclk)
+//这里改成了1kHZ  ,runtime不管用了
+//第二个参数可以改成 *100 ,弄成10khz,看runtime,看定时器时钟是否正确
+void usmart_init(uint16_t tclk)    
 {
 #if USMART_ENTIMX_SCAN == 1
-    usmart_timx_init(1000, tclk * 100 - 1);
+    usmart_timx_init(1000-1, tclk * 1000 - 1);
 #endif
     usmart_dev.sptype = 1;  /* 十六进制显示参数 */
 }

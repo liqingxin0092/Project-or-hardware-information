@@ -1,6 +1,12 @@
 #include "buffer_key.h"
 #include "gpio.h"
+#include "data_structure_m.h"
 
+/*按键环形队列*/
+circle_buffer_t keyBuffer;
+
+/*按键缓冲区*/
+uint8_t key_buffer[KEY_BUFFER_SIZE+1];
 
 /*检测按键是否按下*/
 key_info_t key_mem[BUFFER_KEY_NUM]={
@@ -8,12 +14,8 @@ key_info_t key_mem[BUFFER_KEY_NUM]={
     { GPIO_A ,12 ,1},
 };
 
-/*按键环形队列*/
- key_buffer_t keyBuffer;
-
 /*按键检测时的变量*/
 static key_test_t Key_test[BUFFER_KEY_TEST_NUM];
-
 
 /*检测是否按下*/
 //按下了返回1
@@ -40,41 +42,16 @@ static uint8_t is_key_acticve(uint8_t id)
     }        
 }    
 
-/*写队列*/
-static void write_buffer(key_buffer_t* circle_buffer, uint8_t val)
-{
-    uint8_t temp=circle_buffer->write_ptr+1;
-    (temp==KEY_BUFFER_NUM+1)?(temp=0):(temp=temp);
-    if(circle_buffer->read_ptr!=temp)
-    {
-        circle_buffer->buffer[circle_buffer->write_ptr]=val;
-    }
-    else return ;//队列满
-    if(++circle_buffer->write_ptr==KEY_BUFFER_NUM+1)
-        circle_buffer->write_ptr=0;
-}
-
-/*读队列*/
-uint8_t read_buffer(key_buffer_t* circle_buffer)
-{
-    uint8_t return_val; 
-    if(circle_buffer->read_ptr!=circle_buffer->write_ptr)
-    {
-        return_val=circle_buffer->buffer[circle_buffer->read_ptr];
-    }
-    else return 0;//队列空
-    
-    if(++circle_buffer->read_ptr==KEY_BUFFER_NUM+1)
-        circle_buffer->read_ptr=0;
-    return return_val;
-}
-
 /*初始化buffer_key*/
 void buffer_key_init(void)
 {
     /*两个按键测试*/
     gpio_init_pin(GPIO_A,11,0,0,0,1,0);//低电平触发
     gpio_init_pin(GPIO_A,12,0,0,0,2,0);//高电平触发
+    
+    /*数据结构初始化*/
+    keyBuffer.buffer=key_buffer;
+    keyBuffer.size=KEY_BUFFER_SIZE;
 }
 
 /*获取键值*/
@@ -142,8 +119,8 @@ void key_detect_10ms(void)
             {
                 if (Key_test[i].state == 1)
                 {
-                    Key_test[i].state = 0;//纪录为按下状态
-                    write_buffer(&keyBuffer, 3*i+3);//谈起的状态码
+                    Key_test[i].state = 0;//纪录为未按下状态
+                    write_buffer(&keyBuffer, 3*i+3);//弹起的状态码
                 }
             }
             Key_test[i].long_time=0;   //清空长摁

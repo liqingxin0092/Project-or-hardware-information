@@ -1,6 +1,5 @@
 #include "string.h"
 #include "stdio.h"
-#include "usart.h"
 #include "exfuns.h"
 #include "fattester.h"
 

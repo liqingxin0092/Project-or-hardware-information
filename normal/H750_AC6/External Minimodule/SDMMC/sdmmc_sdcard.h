@@ -1,6 +1,6 @@
 #ifndef __SDMMC_SDCARD_H
 #define __SDMMC_SDCARD_H																			   
-#include "sys.h" 													   
+#include "bsp.h" 													   
  
 //用户配置区			  
 //SDMMC时钟计算公式:SDMMC_CK时钟=sdmmc_ker_ck/[2*clkdiv];其中,sdmmc_ker_ck来自pll1_q_ck,为200Mhz

@@ -6,6 +6,8 @@
 		"stdio.h": "c",
 		"h7_core.h": "c",
 		"stdint.h": "c",
-		"test.h": "c"
+		"test.h": "c",
+		"stm32h750xx.h": "c",
+		"usart_m.h": "c"
 	}
 }

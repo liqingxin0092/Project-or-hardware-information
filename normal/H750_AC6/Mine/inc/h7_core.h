@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file        H7_CORE.c
+ * @file        H7_core.c
  * @author      liqingxin0092
  * @version     V1.0
  * @date        2025-2-14
@@ -617,6 +617,9 @@ typedef uint32_t cache_opera_addr_t;
 //注意值不能是负数
 #define __enable_IRQ(irq_num) NVIC_ISER[(irq_num)>>5]=1<<((irq_num)&0x1f)
 
+/*判断使能没使能*/
+#define __is_enable_IRQ(irq_num) (uint8_t)((NVIC_ISER[(irq_num)>>5]>>((irq_num)&0x1f))&1)
+
 /*软件触发IRQ*/
 #define __trigger_IRQ(irq_num) *NVIC_STIR=irq_num
 
@@ -639,7 +642,7 @@ static inline void __disable_IRQ(uint8_t irq_num)
 #define __get_IRQ_active(irq_num) ((NVIC_IABR[(irq_num)>>5]>>((irq_num)&0x1f))&1)
 
 /*计算优先级*/
-static __inline uint8_t __trans_p_s_to_u8(uint8_t GroupPriority,uint8_t SubPriority)
+static inline uint8_t __trans_p_s_to_u8(uint8_t GroupPriority,uint8_t SubPriority)
 {
     if(__GET_INTERRUPT_GROUPING()==GROUPING_16p_1s)
     {
@@ -722,7 +725,7 @@ static inline void detailed_kernel_Settings(void)
 // use_exception:1,启用异常
 // reload:重装载值,该值为你要的时钟脉冲数-1;
 // clock_source,时钟源:1,处理器时钟;0,外部时钟
-static __inline void __init_systic(uint32_t reload, uint8_t clock_source, uint8_t use_exception)
+static inline void __init_systic(uint32_t reload, uint8_t clock_source, uint8_t use_exception)
 {
     if (use_exception == 1)
         SYSTIC_CSR->TICKINT = 1;
@@ -737,7 +740,7 @@ static __inline void __init_systic(uint32_t reload, uint8_t clock_source, uint8_
 
 /*使能FPU*/
 //全访问,特权和非特权代码均可使用,具体寄存器未编程.
-static inline void __enable_fpu(void)
+static inline void enable_fpu(void)
 {
      __asm volatile("LDR R0,=0xE000ED88"); 
      __asm volatile("MOV R1,#0xF00000");   
@@ -964,5 +967,6 @@ void FPU_CCR_show_info(void);      // 展示关于FPU执行过程中的一些信息(不是计算状
 void set_control(uint32_t value); // 设置控制寄存器
 void mpu_set(void);               // 设置mpu
 void cache_set(void);             // 设置缓存
+void set_votor(uint32_t addr);    //
 
 #endif

@@ -3,14 +3,13 @@
 
 /* 头文件 */
 #include <stdint.h>
-
-extern uint32_t SystemCoreClock;
+#include "rcc_and_pwr_m.h"   
 
 /* 基础配置项 */
 #define configUSE_PREEMPTION                            1                       /* 1: 抢占式调度器, 0: 协程式调度器, 无默认需定义 */
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION         1                       /* 1: 使用硬件计算下一个要运行的任务, 0: 使用软件算法计算下一个要运行的任务, 默认: 0 */
 #define configUSE_TICKLESS_IDLE                         0                       /* 1: 使能tickless低功耗模式, 默认: 0 */
-#define configCPU_CLOCK_HZ                              480000000         /* 定义CPU主频, 单位: Hz, 无默认需定义 */
+#define configCPU_CLOCK_HZ                              rcc_get_system_clk()         /* 定义CPU主频, 单位: Hz, 无默认需定义 */
 //#define configSYSTICK_CLOCK_HZ                          (configCPU_CLOCK_HZ / 8)/* 定义SysTick时钟频率，当SysTick时钟频率与内核时钟频率不同时才可以定义, 单位: Hz, 默认: 不定义 */
 #define configTICK_RATE_HZ                              1000                    /* 定义系统时钟节拍频率, 单位: Hz, 无默认需定义 */
 #define configMAX_PRIORITIES                            32                      /* 定义最大优先级数, 最大优先级=configMAX_PRIORITIES-1, 无默认需定义 */

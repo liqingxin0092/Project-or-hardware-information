@@ -2,7 +2,7 @@
 #include "task.h"
 #include "list.h"
 #include "stdio.h"
-#include "sys.h"
+#include "bsp.h" 
 #include "core_cm7.h"
 #include "modbus_m.h"
 #include "buffer_key.h"
@@ -63,7 +63,7 @@ void task1(void *pvParameters)
   while (1)
   {
     //    printf("хннЯ1....\r\n");
-    modbus_handle();
+//    modbus_handle();
     key_num = buffer_key_get_code();
     if (key_num != 0)
     {

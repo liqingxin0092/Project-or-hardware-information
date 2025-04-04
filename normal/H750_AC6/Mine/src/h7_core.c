@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file        H7_CORE.c
+ * @file        h7_core.c
  * @author      liqingxin0092
  * @version     V1.0
  * @date        2025-2-14
@@ -9,8 +9,9 @@
  *****************************************************************************************
  */
 
-#include "H7_CORE.h"
+#include "h7_core.h"
 #include "stdio.h"
+#include "string.h"
 
 /*获取ipsr信息*/
 void show_ipsr_info(void)
@@ -348,14 +349,24 @@ static void mpu_set_region(uint8_t region_code,uint32_t base_addr,mpu_attribute_
 /*设置总体MPU*/
 //应用级的函数
 //经过测试8~15的号码也可以设置区域,甚至16也可以设置,注意测试.
+//有机会再测试测试
+//透写就相当于开启读cache,关闭写cache.回写就是读写cache都开.
 void mpu_set(void)
 {
+    /*内部flash*/
+    //开启指令cache
+    //无须额外配置MPU,读cache是默认开启的
+    /*qspi flash*/
+    //开启指令cache
+    //无须额外配置MPU,读cache是默认开启的
+    /*DTCM和ITCM*/
+    //不需要任何mpu配置,因为存取速度和cpu一样.
     DISNABLE_ALL_CONFIGURABLE_INTERRUPTS();
     mpu_attribute_t mpu_struct={0};
     DISABLE_MPU();//失能MPU
     mpu_struct.AP=3;//全访问
     mpu_struct.XN=0;//允许指令访问,1才是禁止
-    mpu_struct.TEX=0;//1级别
+    mpu_struct.TEX=1;//1级别
     mpu_struct.B=1;//允许缓冲
     mpu_struct.C=1;//允许缓存
     mpu_struct.S=0;//禁止共享
@@ -375,6 +386,16 @@ void cache_set(void)
 {
     enable_I_Cache();
     enable_D_Cache();
+}
+
+/*设置中断向量表位置*/
+//物理地址上也存在中断向量表
+void set_votor(uint32_t addr)
+{
+    uint32_t * src_addr=(uint32_t*)0x08000000;
+    uint32_t * dest_addr=(uint32_t*)addr;
+    memcpy(dest_addr,src_addr,0x400);
+    SET_VTOR_ADD(addr);
 }
 
 //void PendSV_Handler(void)

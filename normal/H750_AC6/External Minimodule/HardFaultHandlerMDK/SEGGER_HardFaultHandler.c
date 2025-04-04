@@ -39,8 +39,7 @@ Additional information:
   which for example issues a reset or lits an error LED.
 --------  END-OF-HEADER  ---------------------------------------------
 */
-#include "sys.h"
-#include "string.h"
+
 
 /*********************************************************************
 *

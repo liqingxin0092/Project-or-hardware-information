@@ -5,7 +5,8 @@
 #include "stdint.h"
 #include "stdio.h"
 #include "gpio.h"
-#include "soft_timer.h"
+#include "timer_m.h"
+#include "data_structure_m.h"
 
 /*非法读取*/
 void a1(void)
@@ -115,81 +116,9 @@ __attribute__((section("ex_flash"))) void ram_excute(uint32_t a)
 }
 #endif
 
-#if USE_LINK_LIST == 1
-
-/*给链表分配的空间*/
-__attribute__((section(".RAM_AXI"))) uint64_t AppMallocAXISRAM[128 * 1024 / 8];
-
-/*链表创建*/
-link_node_t *link_list_creat(void)
-{
-    link_node_t *p = (link_node_t *)osRtxMemoryAlloc(AppMallocAXISRAM, sizeof(link_node_t), 0);
-    p->next = NULL;
-    return p;
-}
-
-/*添加链表项*/
-// 在尾巴添加
-void link_list_add_node(link_node_t *link_list, content_t content)
-{
-    link_node_t *ptemp = link_list; // 寻址被添加的链表
-    link_node_t *p;                 // 新节点
-    while (ptemp->next != NULL)
-    {
-        ptemp = ptemp->next;
-    }
-    // 到这里说明ptemp->next==NULL
-
-    /*给新结点申请空间*/
-    p = (link_node_t *)osRtxMemoryAlloc(AppMallocAXISRAM, sizeof(link_node_t), 0);
-    p->content = content;
-    p->next = NULL;
-    ptemp->next = p; // 待添加链表最后一个链表项的下一个指向新节点.
-}
-
-/*删除尾巴的节点*/
-void link_list_free_node(link_node_t *link_list)
-{
-    link_node_t *ptemp = link_list; // 寻址被添加的链表
-    if (ptemp->next == NULL)        // 没东西
-    {
-        return;
-    }
-    else // 有东西
-    {
-        while (ptemp->next->next != NULL)
-        {
-            ptemp = ptemp->next;
-        }
-        // 到这里说明ptemp->next->next==NULL
-
-        osRtxMemoryFree(AppMallocAXISRAM, ptemp->next); // 内存释放
-        ptemp->next = NULL;
-    }
-}
-
-/*展示现有的列表项*/
-// 用的时候还得改
-void link_list_show(link_node_t *link_list)
-{
-    link_node_t *ptemp = link_list; // 寻址被添加的链表
-    printf("\r\n");
-    if (ptemp->next == NULL) // 没有
-    {
-        printf("no link list\r\n");
-    }
-    else // 有好多项
-    {
-        while (ptemp->next != NULL) // 有东西
-        {
-            printf("co:%d,pow:%d,\r\n", ptemp->next->content.coefficient, ptemp->next->content.power);
-            ptemp = ptemp->next;
-        }
-    }
-}
 
 /*模拟多项式合并*/
-link_node_t *addition_of_polynomials(link_node_t *a, link_node_t *b)
+static link_node_t *addition_of_polynomials(link_node_t *a, link_node_t *b)
 {
     link_node_t *tempa = a;
     link_node_t *tempb = b;
@@ -282,4 +211,3 @@ void test_addition_of_polynomials(void)
     link_list_show(c);
 }
 
-#endif

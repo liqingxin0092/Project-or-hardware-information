@@ -2,7 +2,7 @@
 #include "gpio.h"
 #include "stm32h7xx.h"
 #include "h7_core.h"
-#include "soft_timer.h"
+#include "timer_m.h"
 #include "gpio.h"
 #include "buffer_key.h"
 
@@ -111,19 +111,19 @@ void modbus_hardware_init(void)
 }
 
 /*modbus串口中断服务程序*/
-void UART4_IRQHandler(void)
-{
-  if (UART4->ISR & 0x20) // 如果有数可读
-  {
-    huart4.RxISR(&huart4); // 这个是执行赋值的操作
-    modbus_buffer[modbus_buffer_cnt] = modbus_temp;
-    modbus_buffer_cnt++;
-    hard_timer_set_point(1750); // 开始计时,1750
+//void UART4_IRQHandler(void)
+//{
+//  if (UART4->ISR & 0x20) // 如果有数可读
+//  {
+//    huart4.RxISR(&huart4); // 这个是执行赋值的操作
+//    modbus_buffer[modbus_buffer_cnt] = modbus_temp;
+//    modbus_buffer_cnt++;
+//    hard_timer_set_point(1750); // 开始计时,1750
 
-    UART4->RQR |= 1 << 3;                          // 清除标志位
-    HAL_UART_Receive_IT(&huart4, &modbus_temp, 1); // 重启接收
-  }
-}
+//    UART4->RQR |= 1 << 3;                          // 清除标志位
+//    HAL_UART_Receive_IT(&huart4, &modbus_temp, 1); // 重启接收
+//  }
+//}
 
 struct bit
 {

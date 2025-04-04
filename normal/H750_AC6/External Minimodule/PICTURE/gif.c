@@ -1,7 +1,7 @@
 #include "piclib.h"
 #include "gif.h"	 
 #include "ff.h"	
-#include "soft_timer.h" 
+#include "timer_m.h"
 #include "string.h"
 
 const u16 _aMaskTbl[16] =

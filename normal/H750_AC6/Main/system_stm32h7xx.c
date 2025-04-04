@@ -83,6 +83,7 @@ const uint8_t D1CorePrescTable[16] = {0, 0, 0, 0, 1, 2, 3, 4, 1, 2, 3, 4, 6, 7, 
  * @retval None
  */
 
+#include "h7_core.h"
 #include "asm_function.h"
 
 void SystemInit(void)
@@ -91,7 +92,7 @@ void SystemInit(void)
   __IO uint32_t tmpreg;
 #endif /* DATA_IN_D2_SRAM */
     
-    asm_enable_fpu();//汇编函数,使能fpu
+    enable_fpu();//static inline 使能fpu
     asm_enable_TCM_re_rmw();//实际只使能re位
     
   /* Reset the RCC clock configuration to the default reset state ------------*/
@@ -139,7 +140,7 @@ void SystemInit(void)
   RCC->SRDCFGR = 0x00000000;
 #endif
   /* Reset PLLCKSELR register */
-  RCC->PLLCKSELR = 0x02020200;
+//  RCC->PLLCKSELR = 0x02020200;
 
   /* Reset PLLCFGR register */
   RCC->PLLCFGR = 0x01FF0000;
