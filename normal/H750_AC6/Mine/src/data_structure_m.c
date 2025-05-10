@@ -15,6 +15,7 @@
 __attribute__((section(".RAM_DTCM"))) uint64_t AppMallocSRAM[LINK_LIST_MALLOC_SZIE * 1024 / 8];
 
 
+
 /*写队列*/
 //返回值:   1,队列满.  0,队列空
 uint8_t write_buffer(circle_buffer_t* circle_buffer, uint8_t val)
@@ -27,8 +28,7 @@ uint8_t write_buffer(circle_buffer_t* circle_buffer, uint8_t val)
     }
     else     
         return 1;//队列满,
-        
-    
+
     if(++circle_buffer->write_ptr==circle_buffer->size+1)
         circle_buffer->write_ptr=0;
     return 0;

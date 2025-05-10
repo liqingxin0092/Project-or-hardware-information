@@ -746,11 +746,6 @@
           <GroupName>mine</GroupName>
           <Files>
             <File>
-              <FileName>asm_function.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\Mine\src\asm_function.s</FilePath>
-            </File>
-            <File>
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Mine\src\bsp.c</FilePath>
@@ -759,11 +754,6 @@
               <FileName>buffer_key.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Mine\src\buffer_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecc_detection.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Mine\src\ecc_detection.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
@@ -779,11 +769,6 @@
               <FileName>modbus_m.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Mine\src\modbus_m.c</FilePath>
-            </File>
-            <File>
-              <FileName>test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Mine\src\test.c</FilePath>
             </File>
             <File>
               <FileName>usart_m.c</FileName>
@@ -829,6 +814,36 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>my test</GroupName>
+          <Files>
+            <File>
+              <FileName>asm_function.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\my_test\src\asm_function.s</FilePath>
+            </File>
+            <File>
+              <FileName>ecc_detection.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\my_test\src\ecc_detection.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\my_test\src\test.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>dsp</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cortexM7lfdp_math.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\Driver\DSP\arm_cortexM7lfdp_math.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -969,8 +984,8 @@
             <DriverSelection>4103</DriverSelection>
           </Flash1>
           <bUseTDR>0</bUseTDR>
-          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -1117,12 +1132,12 @@
                 <Size>0x0</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x30000000</StartAddress>
                 <Size>0x48000</Size>
               </OCR_RVCT6>
               <OCR_RVCT7>
-                <Type>0</Type>
+                <Type>1</Type>
                 <StartAddress>0x38000000</StartAddress>
                 <Size>0x10000</Size>
               </OCR_RVCT7>
@@ -1170,9 +1185,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-invalid-source-encoding -Wno-return-type -Wno-typedef-redefinition</MiscControls>
-              <Define>USE_HAL_DRIVER,STM32H750xx,VECT_TAB_SRAM</Define>
+              <Define>USE_HAL_DRIVER,STM32H750xx,VECT_TAB_SRAM,ARM_MATH_DSP,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include;..\Main;..\External Minimodule\USMART;..\Mine\inc;..\External Minimodule\PICTURE;..\External Minimodule\LCD;..\Third Party\FreeRTOS\include;..\Third Party\FreeRTOS\portable\GCC\ARM_CM7;..\External Minimodule\TIM;..\Third Party\FATFS\source;..\Third Party\FATFS\exfuns;..\External Minimodule\SDMMC;..\External Minimodule\W25Q64;..\External Minimodule\modbus;..\External Minimodule\sys;..\External Minimodule\malloc</IncludePath>
+              <IncludePath>..\Driver\STM32H7xx_HAL_Driver\Inc;..\Driver\CMSIS\h750_Include;..\Driver\CMSIS\Include;..\Main;..\External Minimodule\USMART;..\Mine\inc;..\External Minimodule\PICTURE;..\External Minimodule\LCD;..\Third Party\FreeRTOS\include;..\Third Party\FreeRTOS\portable\GCC\ARM_CM7;..\External Minimodule\TIM;..\Third Party\FATFS\source;..\Third Party\FATFS\exfuns;..\External Minimodule\SDMMC;..\External Minimodule\W25Q64;..\External Minimodule\modbus;..\External Minimodule\sys;..\External Minimodule\malloc;..\my_test\inc;..\Driver\DSP\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1577,11 +1592,6 @@
           <GroupName>mine</GroupName>
           <Files>
             <File>
-              <FileName>asm_function.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\Mine\src\asm_function.s</FilePath>
-            </File>
-            <File>
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Mine\src\bsp.c</FilePath>
@@ -1590,11 +1600,6 @@
               <FileName>buffer_key.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Mine\src\buffer_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecc_detection.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Mine\src\ecc_detection.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
@@ -1610,11 +1615,6 @@
               <FileName>modbus_m.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Mine\src\modbus_m.c</FilePath>
-            </File>
-            <File>
-              <FileName>test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Mine\src\test.c</FilePath>
             </File>
             <File>
               <FileName>usart_m.c</FileName>
@@ -1660,6 +1660,36 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>my test</GroupName>
+          <Files>
+            <File>
+              <FileName>asm_function.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\my_test\src\asm_function.s</FilePath>
+            </File>
+            <File>
+              <FileName>ecc_detection.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\my_test\src\ecc_detection.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\my_test\src\test.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>dsp</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cortexM7lfdp_math.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\Driver\DSP\arm_cortexM7lfdp_math.lib</FilePath>
             </File>
           </Files>
         </Group>

@@ -2,6 +2,7 @@
 #include "h7_core.h"
 #include "test.h"
 #include "usart_m.h"
+#include "arm_math.h"
 
 /* 不用的功能注意注释 */
 
